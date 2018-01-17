@@ -5,7 +5,7 @@ As a <type of user>, i want <some goal > so that <some reason>
 * As a Player i want to place a village so that i can view it on the play board.
 * As a player i want be able to roll dice so that resources become distributed.
 * As a player i want to be able to roll dice so that i can position thief.
-* As a player I want to be able to place thief so that i can Blockade resources from others.(seems like the rules state that you dont get the resources just block others from gaining those.The theif steals and keeps them for him self.)
+* As a player I want to be able to place thief so that i can Blockade resources from others and take ONE resorce card from the  owner of the hexagon in question.(seems like the rules state that you dont get the resources just block others from gaining those.The theif steals and keeps them for him self.)
 * As a player I want to construct so that my constructions become visible on the play board.
 [village,city,road]
 

@@ -17,3 +17,4 @@ As a <type of user>, i want <some goal > so that <some reason>
 
 * As a player I want to know the position of my buildings so that I can collect resource payout.
 * As a Player I want to know the available build position [village,city,road] so that I know where to build.
+* As a Player i want to trade my resource cards with other players so that i can build a road (or villiage and city?)

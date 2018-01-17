@@ -1,0 +1,123 @@
+html{
+    background-color: lightgray;
+}
+
+.board {
+
+
+}
+
+.hexGrid1 {
+	height: 150px;
+	position: absolute;
+    	top:50px;
+    	left:500px;
+}
+.hexGrid2 {
+	height: 150px;
+	position: absolute;
+   	top:50px;
+    	left:629px;
+}
+.hexGrid3 {
+	height: 150px;
+	position: absolute;
+   	top:50px;
+    	left:758px;
+}
+.hexGrid4 {
+	height: 150px;
+	position: absolute;
+    	top:162px;
+    	left:434px;
+}
+.hexGrid5 {
+	height: 150px;
+	position: absolute;
+    	top:162px;
+    	left:563px;
+}
+.hexGrid6 {
+	height: 150px;
+	position: absolute;
+   	top:162px;
+	left:692px;
+}
+.hexGrid7 {
+	height: 150px;
+	position: absolute;
+    	top:162px;
+    	left:821px;
+}
+.hexGrid8 {
+	height: 150px;
+	position: absolute;
+    	top:274px;
+    	left:371px;
+}
+.hexGrid9 {
+	height: 150px;
+	position: absolute;
+   	top:274px;
+    	left:500px;
+}
+.hexGrid10 {
+	height: 150px;
+	position: absolute;
+   	top:274px;
+    	left:629px;
+}
+.hexGrid11 {
+	height: 150px;
+	position: absolute;
+    	top:274px;
+    	left:758px;
+}
+.hexGrid12 {
+	height: 150px;
+	position: absolute;
+    	top:274px;
+    	left:887px;
+}
+.hexGrid13 {
+	height: 150px;
+	position: absolute;
+    	top:386px;
+    	left:434px;
+}
+.hexGrid14 {
+	height: 150px;
+	position: absolute;
+    	top:386px;
+    	left:563px;
+}
+.hexGrid15 {
+	height: 150px;
+	position: absolute;
+    	top:386px;
+    	left:692px;
+}
+.hexGrid16 {
+	height: 150px;
+	position: absolute;
+    	top:386px;
+    	left:821px;
+}
+.hexGrid17 {
+	height: 150px;
+	position: absolute;
+    	top:498px;
+    	left:500px;
+}
+.hexGrid18 {
+	height: 150px;
+	position: absolute;
+    	top:498px;
+    	left:629px;
+}
+.hexGrid19 {
+	height: 150px;
+	position: absolute;
+    	top:498px;
+    	left:758px;
+}

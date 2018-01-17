@@ -10,7 +10,7 @@ As a <type of user>, i want <some goal > so that <some reason>
 [village,city,road]
 
 * As a player i want to keep track of my victory points so I can know if i’ve won.
-* As a player i want to discard resource cards to be able to pay for actions/buildings.
+* As a player that rolled dice i want to discard resource cards to be able to pay for actions/buildings.
 * As a player I want to offer my cards to auction to trade with other players.
 * As a player I want to be able discard resource cards so that i can trade with the bank.
 * As a player I want to discard resource cards so that I can pay the penalty of having to large of a hand.

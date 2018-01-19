@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameProjectApp", "GameProjectApp\GameProjectApp.csproj", "{283FBB98-9C58-486B-AAB8-A8F37ACB1DE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngine", "GameEngine\GameEngine.csproj", "{706BFA7B-CF8B-41B5-A6FB-AC6876ABBAF8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngineTest", "GameEngineTest\GameEngineTest.csproj", "{7734885D-4DF7-476D-A964-183DBB7A165B}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{283FBB98-9C58-486B-AAB8-A8F37ACB1DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{283FBB98-9C58-486B-AAB8-A8F37ACB1DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{283FBB98-9C58-486B-AAB8-A8F37ACB1DE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{706BFA7B-CF8B-41B5-A6FB-AC6876ABBAF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{706BFA7B-CF8B-41B5-A6FB-AC6876ABBAF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{706BFA7B-CF8B-41B5-A6FB-AC6876ABBAF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{706BFA7B-CF8B-41B5-A6FB-AC6876ABBAF8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7734885D-4DF7-476D-A964-183DBB7A165B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7734885D-4DF7-476D-A964-183DBB7A165B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7734885D-4DF7-476D-A964-183DBB7A165B}.Release|Any CPU.ActiveCfg = Release|Any CPU

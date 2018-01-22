@@ -3,121 +3,99 @@ html{
 }
 
 .board {
-
-
-}
-
-.hexGrid1 {
-	height: 150px;
 	position: absolute;
     	top:50px;
+}
+.hexPosition{
+	height: 150px;
+	position: absolute;
+}
+.hexRow1{
+	top:0
+}
+.hexRow2{
+	top:112
+}
+.hexRow3{
+	top:224
+}
+.hexRow4{
+	top:338
+}
+.hexRow5{
+	top:452
+}
+
+#hexShape0 {	
     	left:500px;
 }
-.hexGrid2 {
-	height: 150px;
-	position: absolute;
-   	top:50px;
+#hexShape1 {
     	left:629px;
 }
-.hexGrid3 {
-	height: 150px;
-	position: absolute;
-   	top:50px;
+#hexShape2 {
     	left:758px;
 }
-.hexGrid4 {
-	height: 150px;
-	position: absolute;
-    	top:162px;
+#hexShape3 {
     	left:434px;
+	top:112
 }
-.hexGrid5 {
-	height: 150px;
-	position: absolute;
-    	top:162px;
+#hexShape4 {
     	left:563px;
+	top:112
 }
-.hexGrid6 {
-	height: 150px;
-	position: absolute;
-   	top:162px;
+#hexShape5 {
 	left:692px;
+	top:112
 }
-.hexGrid7 {
-	height: 150px;
-	position: absolute;
-    	top:162px;
+#hexShape6 {
     	left:821px;
+	top:112
 }
-.hexGrid8 {
-	height: 150px;
-	position: absolute;
-    	top:274px;
+#hexShape7 {
     	left:371px;
+	top:224
 }
-.hexGrid9 {
-	height: 150px;
-	position: absolute;
-   	top:274px;
+#hexShape8 {
     	left:500px;
+	top:224
 }
-.hexGrid10 {
-	height: 150px;
-	position: absolute;
-   	top:274px;
+#hexShape9 {
     	left:629px;
+	top:224
 }
-.hexGrid11 {
-	height: 150px;
-	position: absolute;
-    	top:274px;
+#hexShape10 {
     	left:758px;
+	top:224
 }
-.hexGrid12 {
-	height: 150px;
-	position: absolute;
-    	top:274px;
+#hexShape11 {
     	left:887px;
+	top:224
 }
-.hexGrid13 {
-	height: 150px;
-	position: absolute;
-    	top:386px;
+#hexShape12 {
     	left:434px;
+	top:338
 }
-.hexGrid14 {
-	height: 150px;
-	position: absolute;
-    	top:386px;
+#hexShape13 {
     	left:563px;
+	top:338
 }
-.hexGrid15 {
-	height: 150px;
-	position: absolute;
-    	top:386px;
+#hexShape14 {
     	left:692px;
+	top:338
 }
-.hexGrid16 {
-	height: 150px;
-	position: absolute;
-    	top:386px;
+#hexShape15 {
     	left:821px;
+	top:338
 }
-.hexGrid17 {
-	height: 150px;
-	position: absolute;
-    	top:498px;
+#hexShape16 {
     	left:500px;
+	top:452
 }
-.hexGrid18 {
-	height: 150px;
-	position: absolute;
-    	top:498px;
+#hexShape17 {
     	left:629px;
+	top:452
 }
-.hexGrid19 {
-	height: 150px;
-	position: absolute;
-    	top:498px;
+#hexShape18 {
     	left:758px;
+	top:452
 }

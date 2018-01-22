@@ -1,7 +1,11 @@
-﻿@model GameProjectApp.Models.ManageViewModels
+﻿@model GameEngine.GameStateModel
 @{
     ViewBag.Title = "Index";
 }
 
+@Model.
 <h2>Index</h2>
-@Model.MyFunction()
+<form action="Game" method='POST'>
+    <input type='hidden' name='player' value='1'>
+    <input type='submit' name='Endturn' value='End your turn'>
+</form>

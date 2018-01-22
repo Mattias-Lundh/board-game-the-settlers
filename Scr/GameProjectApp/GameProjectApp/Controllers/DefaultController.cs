@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using GameProjectApp.Models;
+using GameEngine;
 
 namespace GameProjectApp.Controllers
 {
@@ -12,9 +12,43 @@ namespace GameProjectApp.Controllers
         // GET: Default
         public ActionResult Index()
         {
-            ManageViewModels x = new ManageViewModels();
-            //HttpCookieCollection.
-            return View(x);
+            
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Game(FormCollection collection)
+        {
+            GameInstruction instruction;
+            switch (collection["FormType"])
+            {
+                case "newGame":
+                    instruction = CreateGameInstruction(collection);
+                    break;
+                case "Instruction":
+                    instruction = NormalGameInstruction(collection);
+                    break;
+                default:
+                    throw new Exception("something went wrong");                    
+            }
+            GameStateModel model = UpdateGame(instruction);
+            return View(model);
+        }
+
+        private GameStateModel UpdateGame(GameInstruction instruction)
+        {
+            return Program.ExecuteInstruction(instruction);
+        }
+
+        private GameInstruction CreateGameInstruction(FormCollection collection)
+        {
+
+            return new GameInstruction();
+        }
+
+        private GameInstruction NormalGameInstruction(FormCollection collection)
+        {
+            return new GameInstruction();
         }
     }
 }

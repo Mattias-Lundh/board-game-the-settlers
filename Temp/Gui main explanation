@@ -1,0 +1,14 @@
+Gui layout main page.
+
+
+Gamelayout - The game layout with hexagons
+
+Actions - Build road, build settlement, build city and buy deveopment card. Select thief placment. Pictures with city, settlement and road. Place buttons
+
+Trade - Trade with player and with bank
+
+Other player info - Resources and victory card.
+
+Players own info display - Development card.
+
+Eventlog - To see what has happend before. Eventlog message scroll list.

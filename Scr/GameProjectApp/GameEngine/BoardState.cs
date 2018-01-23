@@ -25,12 +25,59 @@ namespace GameEngine
             Thief = FindDesert();
         }
 
-        private string[] GenerateHexPaths(string template)
-        {
-            //new board function
-            return new string[19];
-        }
+        public enum BoardOptions { tutorial, center, random };
 
+        private static int RandomPositionForHexPicturePath()
+        {
+            //Guid.NewGuid().GetHashCode() Somewhat ok seed for randomness.
+            Random random = new Random(Guid.NewGuid().GetHashCode());
+            int value = random.Next(0, 19);
+            return value;
+        }
+        private static string[] PlacePicturePath(string pathToHexpicture, int maxAmount, string[] board)
+        {
+            for (int i = 0; i < maxAmount; i++)
+            {
+                bool notPlaced = true;
+                while (notPlaced)
+                {
+                    int possiblePositionToPlacePath = RandomPositionForHexPicturePath();
+                    if (board[possiblePositionToPlacePath] == null)
+                    {
+                        board[possiblePositionToPlacePath] = pathToHexpicture;
+                        notPlaced = false;
+                    }
+                }
+            }
+            return board;
+        }
+             public enum BoardOptions { tutorial, center, random };
+
+        private static int RandomPositionForHexPicturePath()
+        {
+            //Guid.NewGuid().GetHashCode() Somewhat ok seed for randomness.
+            Random random = new Random(Guid.NewGuid().GetHashCode());
+            int value = random.Next(0, 19);
+            return value;
+        }
+        private static string[] PlacePicturePath(string pathToHexpicture, int maxAmount, string[] board)
+        {
+            for (int i = 0; i < maxAmount; i++)
+            {
+                bool notPlaced = true;
+                while (notPlaced)
+                {
+                    int possiblePositionToPlacePath = RandomPositionForHexPicturePath();
+                    if (board[possiblePositionToPlacePath] == null)
+                    {
+                        board[possiblePositionToPlacePath] = pathToHexpicture;
+                        notPlaced = false;
+                    }
+                }
+            }
+            return board;
+        }
+        
         private int[] GenerateResourceNumbers()
         {
             //new resource number function            

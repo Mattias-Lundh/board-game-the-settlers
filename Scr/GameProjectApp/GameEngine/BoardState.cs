@@ -15,7 +15,7 @@ namespace GameEngine
         public Player[] City { get; set; }
         public int Thief { get; set; }
 
-        public BoardState(string template)
+        public BoardState(BoardOptions template)
         {            
             HexGridImgPath = GenerateHexPaths(template);
             ResourceNumber = GenerateResourceNumbers();

@@ -9,7 +9,7 @@ namespace GameEngine
     public class Inventory
     {
         public int City { get; set; }
-        public int Village { get; set; }
+        public int Settlement { get; set; }
         public int Road { get; set; }
         public int Wool { get; set; }
         public int Brick { get; set; }
@@ -28,15 +28,15 @@ namespace GameEngine
         public Inventory()
         {
             //initial starting hand settings
-            City = 0;
-            Village = 0;
-            Road = 0;
+            City = 4;
+            Settlement = 5;
+            Road = 15;
             Wool = 0;
             Brick = 0;
             Ore = 0;
             Lumber = 0;
             Grain = 0;
-
+            DevelopmentCards = new List<Game.DevelopmentCard>();
         }
     }
 }

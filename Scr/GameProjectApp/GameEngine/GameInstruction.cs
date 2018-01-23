@@ -8,7 +8,7 @@ namespace GameEngine
 {
     public class GameInstruction
     {
-        public Guid GameId { get; set; }
+        public Guid GameId { get; set; }        
         public Game Game
         {
             get
@@ -18,12 +18,9 @@ namespace GameEngine
 
         }
         public List<int> RoadChange { get; set; }
-        public List<int> VillageChange { get; set; }
+        public List<int> SettlementChange { get; set; }
         public List<int> CityChange { get; set; }
-
-
-
-
+        
         private void Send()
         {
             //

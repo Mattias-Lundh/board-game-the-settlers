@@ -11,16 +11,16 @@ namespace GameEngine
         public string[] HexGridImgPath { get; set; }
         public int[] ResourceNumber { get; set; }
         public Player[] Road { get; set; }
-        public Player[] Village { get; set; }
+        public Player[] Settlement { get; set; }
         public Player[] City { get; set; }
         public int Thief { get; set; }
-
+        
         public BoardState(string template)
         {            
             HexGridImgPath = GenerateHexPaths(template);
             ResourceNumber = GenerateResourceNumbers();
             Road = new Player[72];
-            Village = new Player[53];
+            Settlement = new Player[53];
             City = new Player[53];
             Thief = FindDesert();
         }
@@ -42,5 +42,6 @@ namespace GameEngine
             //Looks for the position of the Desert Hex
             return 0;
         }
+
     }
 }

@@ -10,6 +10,7 @@ namespace GameEngine
     {
         public BoardState Board { get; set; }
         public List<Player> Player { get; set; }
+        public int[] DiceRoll { get; set; }
 
         public GameStateModel(GameInstruction instruction)
         {

@@ -9,6 +9,7 @@ namespace GameEngine
 {
     public class Player
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public bool IsActivePlayer { get; set; }
         public Color Color { get; set; }
@@ -22,6 +23,7 @@ namespace GameEngine
         public Player(string name, bool isActive, Color color)
         {
             //new player settings
+            Id = new Guid();
             Name = name;
             Color = color;
             Inventory = new Inventory();

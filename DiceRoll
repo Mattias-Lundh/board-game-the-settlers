@@ -1,6 +1,6 @@
    private static int DiceRoll()
         {
-            Random random = new Random();
+            Random random = new Random(Guid.NewGuid().GetHashCode());
             int value1 = random.Next(1, 7);
             int value2 = random.Next(1, 7);
             int total = value1 + value2;

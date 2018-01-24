@@ -7,7 +7,7 @@ namespace GameProjectApp.Models
 {
     public static class MetaData
     {
-        public static List<User> Users { get; set; }
+        public static List<User> Users { get; set; } = new List<User>();
         
         public static User Me(string myId)
         {

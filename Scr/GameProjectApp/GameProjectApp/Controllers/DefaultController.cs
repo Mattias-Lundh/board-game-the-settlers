@@ -45,10 +45,12 @@ namespace GameProjectApp.Controllers
 
         public ActionResult GameLobby(FormCollection collection)
         {
+            User user = new User();
+
             if (collection["poke"] == "refresh")
             {
                 if (!MetaData.Me(Session.SessionID).NewGameState)
-                {                
+                {
                     //stop exectuting code
                     //dont return
                     //abort
@@ -58,26 +60,26 @@ namespace GameProjectApp.Controllers
             }
             else
             {
+                if (MetaData.Me(Session.SessionID) != null)
+                {
+                    user = MetaData.Me(Session.SessionID);
+                }
+                else
+                {
+                    Session["Player"] = "participating";
+                    user.Id = Session.SessionID;
+                    MetaData.Users.Add(user);
+
+                }
+
+                user.NewGameState = false;
+
                 foreach (User u in MetaData.NotMe(Session.SessionID))
                 {
                     u.NewGameState = true;
                 }
             }
-
-            User user = new User();
-            if (MetaData.Me(Session.SessionID) != null)
-            {
-                user = MetaData.Me(Session.SessionID);
-            }
-            else
-            {
-                Session["Player"] = "participating";
-                user.Id = Session.SessionID;
-            }
-
-            user.NewGameState = false;
-            
-            return View(user);
+            return View(MetaData.Me(Session.SessionID));
         }
 
 

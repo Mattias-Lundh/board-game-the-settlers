@@ -91,11 +91,31 @@ namespace GameProjectApp.Controllers
         private GameInstruction CreateGameInstruction(FormCollection collection)
         {
             GameInstruction result = new GameInstruction();
+            result.Type = GameInstruction.InstructionType.newGame;
+            //set game Id
+            result.GameId = Guid.NewGuid();
+            //populate game with players
+            result.NewGamePlayers = new List<string>();
             for (int i = 1; i <= Convert.ToInt32(collection["PlayerCount"]); i++)
             {
-                result.NewGamePlayers.Add(collection["Player" + i + "Name"]);
-
+                result.NewGamePlayers.Add(collection["player" + i + "Name"]);
+                result.NewGamePlayersId.Add(collection["player" + i + "Id"]);
             }
+            //define setup template for board
+            BoardState.BoardOptions template = BoardState.BoardOptions.tutorial;
+            switch (collection["template"])
+            {
+                case "tutorial":
+                    template = BoardState.BoardOptions.tutorial;
+                    break;
+                case "random":
+                    template = BoardState.BoardOptions.random;
+                    break;
+                case "center":
+                    template = BoardState.BoardOptions.center;
+                    break;
+            }
+            result.BoardTemplate = template;
 
             return result;
         }

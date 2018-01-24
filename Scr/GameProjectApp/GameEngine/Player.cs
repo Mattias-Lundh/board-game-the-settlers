@@ -11,7 +11,6 @@ namespace GameEngine
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public bool IsActivePlayer { get; set; }
         public Color Color { get; set; }
         public Inventory Inventory { get; set; }
         public int Soldier { get; set; }
@@ -20,14 +19,13 @@ namespace GameEngine
         public bool HasLongestRoad { get; set; }
         public int VictoryPoints { get; set; }
 
-        public Player(string name, string id, bool isActive, Color color)
+        public Player(string name, string id, Color color)
         {
             //new player settings
             Id = id;
             Name = name;
             Color = color;
             Inventory = new Inventory();
-            IsActivePlayer = isActive;
             Soldier = 0;
             HasLargestArmy = false;
             LongestRoad = 0;

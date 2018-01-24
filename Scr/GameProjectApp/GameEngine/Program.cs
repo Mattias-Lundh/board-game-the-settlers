@@ -8,22 +8,63 @@ namespace GameEngine
 {
     public class Program
     {
-        private static List<Game> Games { get; set; }
+        private static List<GameStateModel> Games { get; set; }
 
         public static GameStateModel ExecuteInstruction(GameInstruction instruction)
         {
-            return new GameStateModel(instruction);
+            GameStateModel model;
+
+            switch (instruction.Type)
+            {
+                case GameInstruction.InstructionType.newGame:
+                    model = new GameStateModel(instruction);
+                    break;
+
+                case GameInstruction.InstructionType.normal:
+                    model = FindGame(instruction.GameId);
+                    //build road
+                    if(instruction.RoadChange != null)
+                    {
+                        foreach(int roadLocation in instruction.RoadChange)
+                        {
+                            PlayerAction action = new PlayerAction(model);
+                            action.BuildRoad(roadLocation);
+                            model.GameLog.Add(model.ActivePlayer.Name + " built a new road");
+                        }
+                    }
+                    //build Settlement
+                    if (instruction.SettlementChange != null)
+                    {
+                        foreach (int SettlementLocation in instruction.SettlementChange)
+                        {
+                            PlayerAction action = new PlayerAction(model);
+                            action.BuildSettlement(SettlementLocation);
+                            model.GameLog.Add(model.ActivePlayer.Name + " built a new Settlement");
+                        }
+                    }
+                    //build City
+                    if (instruction.CityChange != null)
+                    {
+                        foreach (int CityLocation in instruction.CityChange)
+                        {
+                            PlayerAction action = new PlayerAction(model);
+                            action.BuildCity(CityLocation);
+                            model.GameLog.Add(model.ActivePlayer.Name + " built a new City");
+                        }
+                    }
+
+                    break;
+
+                default:
+                    throw new Exception("unknown instruction type");
+            }
+
+            return model;
         }
 
-        public static Guid CreateNewGame(string[] playerNames)
+        public static GameStateModel FindGame(Guid id)
         {
-            Games.Add(new Game(Guid.NewGuid(), playerNames));
-            return Games[Games.Count - 1].Id;
-        }
-
-        public static Game FindGame(Guid id)
-        {
-            foreach(Game game in Games)
+            foreach(GameStateModel game in Games)
             {
                 if(game.Id == id)
                 {

@@ -8,31 +8,31 @@ namespace GameEngine
 {
     public class PlayerAction
     {
-        private Game Game { get; set; }
-        public PlayerAction(Guid GameId)
+        private GameStateModel Game { get; set; }
+        public PlayerAction(GameStateModel game)
         {
-            Game = Program.FindGame(GameId);
+            Game = game;
         }
 
         public void BuildRoad(int location)
         {
-            Game.State.Board.Road[location] = Game.ActivePlayer;
+            Game.Board.Road[location] = Game.ActivePlayer;
         }
 
         public void BuildSettlement(int location)
         {
-            Game.State.Board.Settlement[location] = Game.ActivePlayer;
+            Game.Board.Settlement[location] = Game.ActivePlayer;
         }
 
         public void BuildCity(int location)
         {
-            Game.State.Board.City[location] = Game.ActivePlayer;
+            Game.Board.City[location] = Game.ActivePlayer;
         }
 
         public void RollDice()
         {
             //incomplete
-            Game.State.DiceRoll = new int[3];
+            //Game.DiceRoll = new int[3];
         }
 
         public void OfferTrade(int[] offer, int[] request)

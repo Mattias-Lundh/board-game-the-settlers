@@ -23,7 +23,7 @@ namespace GameEngine
                 return Wool + Brick + Ore + Lumber + Grain;
             }
         }
-        public List<Game.DevelopmentCard> DevelopmentCards { get; set; }
+        public List<Bank.DevelopmentCard> DevelopmentCards { get; set; }
 
         public Inventory()
         {
@@ -36,7 +36,7 @@ namespace GameEngine
             Ore = 0;
             Lumber = 0;
             Grain = 0;
-            DevelopmentCards = new List<Game.DevelopmentCard>();
+            DevelopmentCards = new List<Bank.DevelopmentCard>();
         }
     }
 }

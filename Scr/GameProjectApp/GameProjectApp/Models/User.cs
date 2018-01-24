@@ -5,9 +5,9 @@ using System.Web;
 
 namespace GameProjectApp.Models
 {
-    public class GameLobby
+    public class User
     {
-        public string Message { get; set; }
         public string Id { get; set; }
+        public bool NewGameState { get; set; }
     }
 }

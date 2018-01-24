@@ -42,16 +42,44 @@ namespace GameProjectApp.Controllers
             return View(model);
         }
 
+
         public ActionResult GameLobby(FormCollection collection)
         {
-            GameLobby lobby = new GameLobby();
-            Session["Player"] = "";
-            lobby.Id = Session.SessionID;
+            if (collection["poke"] == "refresh")
+            {
+                if (!MetaData.Me(Session.SessionID).NewGameState)
+                {                
+                    //stop exectuting code
+                    //dont return
+                    //abort
+                    //break
+                    //ignore request
+                }
+            }
+            else
+            {
+                foreach (User u in MetaData.NotMe(Session.SessionID))
+                {
+                    u.NewGameState = true;
+                }
+            }
 
-            lobby.Message = collection["textbox1"];
+            User user = new User();
+            if (MetaData.Me(Session.SessionID) != null)
+            {
+                user = MetaData.Me(Session.SessionID);
+            }
+            else
+            {
+                Session["Player"] = "participating";
+                user.Id = Session.SessionID;
+            }
 
-            return View(lobby);
+            user.NewGameState = false;
+            
+            return View(user);
         }
+
 
         private GameStateModel UpdateGame(GameInstruction instruction)
         {

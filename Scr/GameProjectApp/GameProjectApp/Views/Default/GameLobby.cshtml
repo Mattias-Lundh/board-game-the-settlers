@@ -1,11 +1,10 @@
-﻿@model GameProjectApp.Models.GameLobby
+﻿@model GameProjectApp.Models.User
 @{
     ViewBag.Title = "GameLobby";
 }
 
 <h2>GameLobby</h2>
 
-@Model.Message<br>
 
 @Model.Id.ToString()<br>
 
@@ -14,4 +13,19 @@
     <input type="hidden" name="test" value="success">
     <input type="submit" value="POST More">
 
+</form>
+
+<script type="text/javascript">
+    function formSubmit(){
+        document.getElementById("Refresh").submit();
+        window.setTimeout(formSubmit, 1000);
+    }
+
+    window.onload=function(){
+          window.setTimeout(formSubmit, 1000);
+    };
+</script>
+
+<form action="GameLobby" method="POST" id="Refresh">
+    <input type="hidden" name="poke" value="refresh">
 </form>

@@ -12,6 +12,7 @@ namespace GameEngine
         public List<Player> Player { get; set; }
         public int[] DiceRoll { get; set; }
 
+
         public GameStateModel(GameInstruction instruction)
         {
             //MODIFY

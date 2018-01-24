@@ -29,7 +29,7 @@ namespace GameEngine
                         {
                             PlayerAction action = new PlayerAction(model);
                             action.BuildRoad(roadLocation);
-                            model.GameLog.Add(model.ActivePlayer.Name + " built a new road");
+                            model.Events.GameLog.Add(model.ActivePlayer.Name + " built a new road");
                         }
                     }
                     //build Settlement
@@ -39,7 +39,7 @@ namespace GameEngine
                         {
                             PlayerAction action = new PlayerAction(model);
                             action.BuildSettlement(SettlementLocation);
-                            model.GameLog.Add(model.ActivePlayer.Name + " built a new Settlement");
+                            model.Events.GameLog.Add(model.ActivePlayer.Name + " built a new Settlement");
                         }
                     }
                     //build City
@@ -49,7 +49,7 @@ namespace GameEngine
                         {
                             PlayerAction action = new PlayerAction(model);
                             action.BuildCity(CityLocation);
-                            model.GameLog.Add(model.ActivePlayer.Name + " built a new City");
+                            model.Events.GameLog.Add(model.ActivePlayer.Name + " built a new City");
                         }
                     }
 

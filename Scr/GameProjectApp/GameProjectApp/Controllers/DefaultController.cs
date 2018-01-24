@@ -56,6 +56,7 @@ namespace GameProjectApp.Controllers
                     //abort
                     //break
                     //ignore request
+                    return new HttpStatusCodeResult(304, "Not Modified");
                 }
             }
             else

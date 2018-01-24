@@ -13,7 +13,7 @@ namespace GameEngine
         public Bank Bank { get; set; }
         public List<Player> Players { get; set; }
         public Player ActivePlayer { get; set; }
-        public List<string> GameLog { get; set; }
+        public Event Events { get; set; }
 
         public GameStateModel(GameInstruction instruction)
         {
@@ -22,6 +22,7 @@ namespace GameEngine
             //new board
             Board = new BoardState(instruction.BoardTemplate);
             //populate player list
+            Players = new List<Player>();
             List<Color> civColor = new List<Color> { Color.Blue, Color.Red, Color.Orange, Color.White };
             for (int i = 0; i < instruction.NewGamePlayers.Count; i++)
             {
@@ -31,8 +32,8 @@ namespace GameEngine
             Random rdm = new Random();
             ActivePlayer = Players[rdm.Next(0, instruction.NewGamePlayers.Count - 1)];
 
-            GameLog.Add("A new game has begun");
-            GameLog.Add(ActivePlayer.Name + " turn to deploy 1 settlement and 1 road");
+            Events.GameLog.Add("A new game has begun");
+            Events.GameLog.Add(ActivePlayer.Name + " turn to deploy 1 settlement and 1 road");
         }
     }
 }

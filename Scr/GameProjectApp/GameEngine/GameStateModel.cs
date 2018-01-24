@@ -14,7 +14,8 @@ namespace GameEngine
 
         public GameStateModel(GameInstruction instruction)
         {
-            Board = new BoardState("replace with enum that matches function");            
+            //MODIFY
+            Board = new BoardState(BoardState.BoardOptions.center);            
         }
     }
 }

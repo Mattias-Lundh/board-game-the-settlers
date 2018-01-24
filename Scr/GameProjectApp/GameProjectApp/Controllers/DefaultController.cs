@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using GameEngine;
+using GameProjectApp.Models;
 
 namespace GameProjectApp.Controllers
 {
@@ -12,7 +13,7 @@ namespace GameProjectApp.Controllers
         // GET: Default
         public ActionResult Index()
         {
-            
+
             return View();
         }
 
@@ -35,10 +36,21 @@ namespace GameProjectApp.Controllers
                     instruction = NormalGameInstruction(collection);
                     break;
                 default:
-                    throw new Exception("something went wrong");                    
+                    throw new Exception("something went wrong");
             }
             GameStateModel model = UpdateGame(instruction);
             return View(model);
+        }
+
+        public ActionResult GameLobby(FormCollection collection)
+        {
+            GameLobby lobby = new GameLobby();
+            Session["Player"] = "";
+            lobby.Id = Session.SessionID;
+
+            lobby.Message = collection["textbox1"];
+
+            return View(lobby);
         }
 
         private GameStateModel UpdateGame(GameInstruction instruction)
@@ -48,8 +60,14 @@ namespace GameProjectApp.Controllers
 
         private GameInstruction CreateGameInstruction(FormCollection collection)
         {
+            GameInstruction result = new GameInstruction();
+            for (int i = 1; i <= Convert.ToInt32(collection["PlayerCount"]); i++)
+            {
+                result.NewGamePlayers.Add(collection["Player" + i + "Name"]);
 
-            return new GameInstruction();
+            }
+
+            return result;
         }
 
         private GameInstruction NormalGameInstruction(FormCollection collection)

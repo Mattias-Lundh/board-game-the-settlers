@@ -17,7 +17,7 @@ namespace GameEngine
 
         public static Guid CreateNewGame(string[] playerNames)
         {
-            Games.Add(new Game(new Guid(), playerNames));
+            Games.Add(new Game(Guid.NewGuid(), playerNames));
             return Games[Games.Count - 1].Id;
         }
 

@@ -9,7 +9,7 @@ namespace GameEngine
 {
     public class Player
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public bool IsActivePlayer { get; set; }
         public Color Color { get; set; }
@@ -20,10 +20,10 @@ namespace GameEngine
         public bool HasLongestRoad { get; set; }
         public int VictoryPoints { get; set; }
 
-        public Player(string name, bool isActive, Color color)
+        public Player(string name, string id, bool isActive, Color color)
         {
             //new player settings
-            Id = new Guid();
+            Id = id;
             Name = name;
             Color = color;
             Inventory = new Inventory();

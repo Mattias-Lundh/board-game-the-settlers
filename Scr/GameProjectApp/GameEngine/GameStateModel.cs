@@ -14,7 +14,8 @@ namespace GameEngine
 
         public GameStateModel(GameInstruction instruction)
         {
-            Board = new BoardState(BoardState.BoardOptions.tutorial);            
+            //MODIFY
+            Board = new BoardState(BoardState.BoardOptions.center);            
         }
     }
 }

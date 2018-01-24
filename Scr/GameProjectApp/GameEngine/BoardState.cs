@@ -8,61 +8,47 @@ namespace GameEngine
 {
     public class BoardState
     {
+        public enum BoardOptions { tutorial, center, random };
         public string[] HexGridImgPath { get; set; }
         public int[] ResourceNumber { get; set; }
         public Player[] Road { get; set; }
-        public Player[] Village { get; set; }
+        public Player[] Settlement { get; set; }
         public Player[] City { get; set; }
         public int Thief { get; set; }
 
         public BoardState(BoardOptions template)
-        {            
+        {
             HexGridImgPath = GenerateHexPaths(template);
             ResourceNumber = GenerateResourceNumbers();
             Road = new Player[72];
-            Village = new Player[53];
+            Settlement = new Player[53];
             City = new Player[53];
             Thief = FindDesert();
         }
 
-        public enum BoardOptions { tutorial, center, random };
-
-        private static int RandomPositionForHexPicturePath()
+        private int[] GenerateResourceNumbers()
         {
-            //Guid.NewGuid().GetHashCode() Somewhat ok seed for randomness.
-            Random random = new Random(Guid.NewGuid().GetHashCode());
-            int value = random.Next(0, 19);
-            return value;
+            //new resource number function            
+            return new int[19];
         }
-        
 
-       
-        private static string[] PlacePicturePath(string pathToHexpicture, int maxAmount, string[] board)
+        private int FindDesert()
         {
-            for (int i = 0; i < maxAmount; i++)
-            {
-                bool notPlaced = true;
-                while (notPlaced)
-                {
-                    int possiblePositionToPlacePath = RandomPositionForHexPicturePath();
-                    if (board[possiblePositionToPlacePath] == null)
-                    {
-                        board[possiblePositionToPlacePath] = pathToHexpicture;
-                        notPlaced = false;
-                    }
-                }
-            }
-            return board;
+            //Looks for the position of the Desert Hex
+            return 0;
         }
-                public static string[] GenerateHexpaths(BoardOptions choosenOption)
+
+        private string[] GenerateHexPaths(BoardOptions choosenOption)
         {
+            // MODIFY
             int maxDesert = 1;
             int maxBrick = 3;
             int maxFeild = 4;
             int maxForest = 4;
             int maxHill = 4;
             int maxMountain = 3;
-
+            
+            // MODIFY
             string desert = @"/Images/hex/Desert.png";
             string brick = @"/Images/hex/Brick.png";
             string feild = @"/Images/hex/Field.png";
@@ -118,16 +104,30 @@ namespace GameEngine
             return pathToHexpicture;
         }
 
-        private int[] GenerateResourceNumbers()
+        private int RandomPositionForHexPicturePath()
         {
-            //new resource number function            
-            return new int[19];
+            //Guid.NewGuid().GetHashCode() Somewhat ok seed for randomness.
+            Random random = new Random(Guid.NewGuid().GetHashCode());
+            int value = random.Next(0, 19);
+            return value;
         }
 
-        private int FindDesert()
+        private string[] PlacePicturePath(string pathToHexpicture, int maxAmount, string[] board)
         {
-            //Looks for the position of the Desert Hex
-            return 0;
+            for (int i = 0; i < maxAmount; i++)
+            {
+                bool notPlaced = true;
+                while (notPlaced)
+                {
+                    int possiblePositionToPlacePath = RandomPositionForHexPicturePath();
+                    if (board[possiblePositionToPlacePath] == null)
+                    {
+                        board[possiblePositionToPlacePath] = pathToHexpicture;
+                        notPlaced = false;
+                    }
+                }
+            }
+            return board;
         }
     }
 }

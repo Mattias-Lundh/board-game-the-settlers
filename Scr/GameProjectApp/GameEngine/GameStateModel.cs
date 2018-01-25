@@ -18,7 +18,7 @@ namespace GameEngine
         public GameStateModel(GameInstruction instruction)
         {
             //new id
-            Id = Guid.NewGuid();
+            Id = instruction.GameId;
             //new board
             Board = new BoardState(instruction.BoardTemplate);
             //populate player list

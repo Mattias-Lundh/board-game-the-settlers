@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace GameEngine
 {
@@ -157,6 +158,141 @@ namespace GameEngine
             Game.Bank.OreBank += 1;
 
             Game.Events.GameLog.Add(Game.ActivePlayer.Name + " buys a development card");
+        }
+
+        public int LongestRoadLength(Player player)
+        {
+            int result = 0;
+            for (int i = 0; i < Game.Board.Road.Length; i++)
+            {
+                if (Game.Board.Road[i] != null)
+                {
+                    if (Game.Board.Road[i] == player)
+                    {
+                        result = Math.Max(result, MeasureRoad(i, player));
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private int MeasureRoad(int road, Player player)
+        {
+            int result = 0;
+            List<int> Visited = new List<int>();
+            Visited.Add(road);
+            result = BuildRoads(GetRoadNeighbourData(), Visited, player).Count;
+            return result;
+        }
+
+        private List<int> BuildRoads(Dictionary<int, List<int>> neighbourData, List<int> visited, Player player)
+        {
+            List<int> result = visited;
+            int currentLocation = visited[visited.Count - 1];
+            for (int i = 2; i < neighbourData[currentLocation].Count; i++)
+            {
+
+                if (!visited.Contains(neighbourData[currentLocation][i]) &&
+                    Game.Board.Road[neighbourData[currentLocation][i]] != null &&
+                    Game.Board.Road[neighbourData[currentLocation][i]] == player &&
+                    (Game.Board.City[FindCommonNeighbourCity(currentLocation, neighbourData[currentLocation][i], neighbourData)] == null ||
+                    Game.Board.City[FindCommonNeighbourCity(currentLocation, neighbourData[currentLocation][i], neighbourData)] == player))
+                {
+                    List<int> followRoad = visited;
+                    followRoad.Add(neighbourData[currentLocation][i]);
+                    followRoad = BuildRoads(neighbourData, followRoad, player);
+                    if (result.Count < followRoad.Count)
+                    {
+                        result = followRoad;
+                    }
+                }
+            }
+            return result;
+        }
+
+        private int FindCommonNeighbourCity(int road1, int road2, Dictionary<int, List<int>> neighbourData)
+        {
+            int result;
+
+            if (neighbourData[road1][0] == neighbourData[road2][0])
+            {
+                result = neighbourData[road1][0];
+            }
+            else if (neighbourData[road1][1] == neighbourData[road2][0])
+            {
+                result = neighbourData[road1][1];
+            }
+            else if (neighbourData[road1][1] == neighbourData[road2][1])
+            {
+                result = neighbourData[road1][1];
+            }
+            else if (neighbourData[road1][0] == neighbourData[road2][1])
+            {
+                result = neighbourData[road1][0];
+            }
+            else
+            {
+                throw new Exception("your data file 'longestRoad.txt' is corrupt");
+            }
+
+
+
+            return result;
+        }
+
+        private Dictionary<int, List<int>> GetRoadNeighbourData()
+        {
+            // format of List<int>....
+            //  [0] city 1                     a city that neighbours the road represented by the dictionary key
+            //  [1] city 2                     another city that neighbours the road represented by the dictionary key
+            //  [2] road 1                     a road that neig..... yeah you get it
+            //  [3] road 2                     .....
+            //  [4] road 3  (optional)         .....
+            //  [5] road 4  (optional)         .....
+
+
+            Dictionary<int, List<int>> result = new Dictionary<int, List<int>>();
+
+            string[] data = File.ReadAllLines(Environment.CurrentDirectory + @"/GameEngine/data/longestRoad.txt");
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                int city1 = Convert.ToInt32(data[i].Substring(data[i].IndexOf('-') - 1, 2).Replace("#", ""));
+                int city2 = Convert.ToInt32(data[i].Substring(data[i].IndexOf('-') + 1));
+
+                List<int> neighbours = new List<int>();
+                string[] rawNeighbours = data[i].Split(',');
+                for (int j = 0; j < rawNeighbours.Length - 1; j++)
+                {
+                    if (j == 0)
+                    {
+                        neighbours.Add(Convert.ToInt32(rawNeighbours[j].Substring(rawNeighbours[j].IndexOf(':') + 1)));
+                    }
+                    else if (j == rawNeighbours.Length - 1)
+                    {
+                        neighbours.Add(Convert.ToInt32(rawNeighbours[j].Substring(0, rawNeighbours[j].IndexOf('#') - 1)));
+
+                    }
+                    else
+                    {
+                        neighbours.Add(Convert.ToInt32(rawNeighbours[j]));
+
+                    }
+                }
+
+                List<int> finalvalues = new List<int>();
+                finalvalues.Add(city1);
+                finalvalues.Add(city2);
+
+                foreach (int num in neighbours)
+                {
+                    finalvalues.Add(num);
+                }
+                result.Add(i, finalvalues);
+            }
+
+            return result;
         }
     }
 }

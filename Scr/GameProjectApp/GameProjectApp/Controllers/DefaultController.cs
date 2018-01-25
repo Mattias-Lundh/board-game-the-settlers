@@ -91,6 +91,12 @@ namespace GameProjectApp.Controllers
 
         private GameInstruction CreateGameInstruction(FormCollection collection)
         {
+            // --- required input ---
+            //PlayerCount
+            //player" + i + "Name
+            //player" + i + "Id
+            //template
+
             GameInstruction result = new GameInstruction();
             result.Type = GameInstruction.InstructionType.newGame;
             //set game Id

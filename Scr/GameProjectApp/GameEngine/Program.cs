@@ -23,13 +23,12 @@ namespace GameEngine
                 case GameInstruction.InstructionType.normal:
                     model = FindGame(instruction.GameId);
                     //build road
-                    if(instruction.RoadChange != null)
+                    if (instruction.RoadChange != null)
                     {
-                        foreach(int roadLocation in instruction.RoadChange)
+                        foreach (int roadLocation in instruction.RoadChange)
                         {
                             PlayerAction action = new PlayerAction(model);
                             action.BuildRoad(roadLocation);
-                            model.Events.GameLog.Add(model.ActivePlayer.Name + " built a new road");
                         }
                     }
                     //build Settlement
@@ -39,7 +38,6 @@ namespace GameEngine
                         {
                             PlayerAction action = new PlayerAction(model);
                             action.BuildSettlement(SettlementLocation);
-                            model.Events.GameLog.Add(model.ActivePlayer.Name + " built a new Settlement");
                         }
                     }
                     //build City
@@ -49,7 +47,34 @@ namespace GameEngine
                         {
                             PlayerAction action = new PlayerAction(model);
                             action.BuildCity(CityLocation);
-                            model.Events.GameLog.Add(model.ActivePlayer.Name + " built a new City");
+                        }
+                    }
+
+                    if (instruction.TradeOffer != null)
+                    {
+                        //Other player is willing to trade
+                        if (instruction.TradeCounterOffer)
+                        {
+                            PlayerAction action = new PlayerAction(model);
+                            action.OfferTrade(instruction.TradeOffer, instruction.TradeAccept, instruction.TradeWith);
+                        }
+                        //player makes a bank trade
+                        else if (instruction.BankTrade)
+                        {
+                            PlayerAction action = new PlayerAction(model);
+                            action.TradeWithBank(instruction.TradeOffer, instruction.TradeAccept);
+                        }
+                        //player make a public trade offer
+                        else if (instruction.TradeWith == null)
+                        {
+                            PlayerAction action = new PlayerAction(model);
+                            action.OfferTrade(instruction.TradeOffer, instruction.TradeAccept);
+                        }
+                        //player confirms an excisting trade offer
+                        else
+                        {
+                            PlayerAction action = new PlayerAction(model);
+                            action.AcceptTrade(instruction.TradeOffer, instruction.TradeAccept, instruction.TradeWith);
                         }
                     }
 
@@ -64,9 +89,9 @@ namespace GameEngine
 
         public static GameStateModel FindGame(Guid id)
         {
-            foreach(GameStateModel game in Games)
+            foreach (GameStateModel game in Games)
             {
-                if(game.Id == id)
+                if (game.Id == id)
                 {
                     return game;
                 }

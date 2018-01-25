@@ -39,7 +39,6 @@ namespace GameEngine
             Game.Bank.LumberBank += 1;
 
             Game.Events.GameLog.Add(Game.ActivePlayer.Name + " builds a settlement");
-
         }
 
         public void BuildCity(int location)
@@ -52,7 +51,89 @@ namespace GameEngine
             Game.Bank.OreBank += 3;
 
             Game.Events.GameLog.Add(Game.ActivePlayer.Name + " builds a city");
+        }
 
+        public void PlaceThief(int location)
+        {
+            Game.Board.Thief = location;
+            Game.Events.GameLog.Add("The Thief has been moved");
+        }
+
+        public void EndTurn()
+        {
+            Game.Events.GameLog.Add(Game.ActivePlayer.Name + " ends the turn");
+            if (Game.Players.IndexOf(Game.ActivePlayer) == Game.Players.Count -1)
+            {
+                Game.ActivePlayer = Game.Players[0];
+            }
+            else
+            {
+                Game.ActivePlayer = Game.Players[Game.Players.IndexOf(Game.ActivePlayer) + 1];
+            }
+        }
+        
+        public void Steal(Player player)
+        {
+            if (player.Inventory.HandSize > 0)
+            {
+                Random random = new Random();
+                bool foundCard = false;
+                while (!foundCard)
+                {
+                    switch (random.Next(0, 4))
+                    {
+                        case 0:
+                            if (player.Inventory.Wool > 1)
+                            {
+                                Game.ActivePlayer.Inventory.Wool += 1;
+                                player.Inventory.Wool -= 1;
+                                Game.Events.GameLog.Add(Game.ActivePlayer.Name + " steals a resource from " + player.Name);
+                                foundCard = true;
+                            }
+                            break;
+                        case 1:
+                            if (player.Inventory.Brick > 1)
+                            {
+                                Game.ActivePlayer.Inventory.Brick += 1;
+                                player.Inventory.Brick -= 1;
+                                Game.Events.GameLog.Add(Game.ActivePlayer.Name + " steals a resource from " + player.Name);
+                                foundCard = true;
+                            }
+                            break;
+                        case 2:
+                            if (player.Inventory.Ore > 1)
+                            {
+                                Game.ActivePlayer.Inventory.Ore += 1;
+                                player.Inventory.Ore -= 1;
+                                Game.Events.GameLog.Add(Game.ActivePlayer.Name + " steals a resource from " + player.Name);
+                                foundCard = true;
+                            }
+                            break;
+                        case 3:
+                            if (player.Inventory.Lumber > 1)
+                            {
+                                Game.ActivePlayer.Inventory.Lumber += 1;
+                                player.Inventory.Lumber -= 1;
+                                Game.Events.GameLog.Add(Game.ActivePlayer.Name + " steals a resource from " + player.Name);
+                                foundCard = true;
+                            }
+                            break;
+                        case 4:
+                            if (player.Inventory.Grain > 1)
+                            {
+                                Game.ActivePlayer.Inventory.Grain += 1;
+                                player.Inventory.Grain -= 1;
+                                Game.Events.GameLog.Add(Game.ActivePlayer.Name + " steals a resource from " + player.Name);
+                                foundCard = true;
+                            }
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Game.Events.GameLog.Add(player.Name + " has nothing to steal");
+            }
         }
 
         public void RollDice()
@@ -83,7 +164,30 @@ namespace GameEngine
 
             string message = Game.ActivePlayer.Name + " offers a trade of" + offerConcat + ". It will cost you" + requestConcat;
 
+            Game.Events.Offer = offer;
+            Game.Events.Request = request;
             Game.Events.TradeMessage = message;
+        }
+
+        public void OfferTrade(int[] offer, int[] request, Player player)
+        {
+            string offerConcat = "";
+            if (offer[0] > 0) { offerConcat = offer[0] + " Wool"; }
+            if (offer[1] > 0) { offerConcat = offer[1] + " brick"; }
+            if (offer[2] > 0) { offerConcat = offer[2] + " Ore"; }
+            if (offer[3] > 0) { offerConcat = offer[3] + " Lumber"; }
+            if (offer[4] > 0) { offerConcat = offer[4] + " Grain"; }
+            string requestConcat = "";
+            if (request[0] > 0) { requestConcat = offer[0] + " Wool"; }
+            if (request[1] > 0) { requestConcat = offer[1] + " brick"; }
+            if (request[2] > 0) { requestConcat = offer[2] + " Ore"; }
+            if (request[3] > 0) { requestConcat = offer[3] + " Lumber"; }
+            if (request[4] > 0) { requestConcat = offer[4] + " Grain"; }
+
+            string message = player.Name + " will trade" + offerConcat + ". if you provide" + requestConcat;
+
+            Game.Events.Deal = new TradeDeal(player, offer, request);
+            Game.Events.Deal.Message = message;
         }
 
         public void AcceptTrade(int[] offer, int[] request, Player TradeParticipant)

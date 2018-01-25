@@ -10,13 +10,15 @@ namespace GameEngine
     {
         public List<string> GameLog { get; set; }
         public string TradeMessage { get; set; }
-        public List<string> CounterTradeMessages { get; set; }
-        public Player TradeParticipant { get; set; }
+        public TradeDeal Deal { get; set; }
+        public int[] Offer { get; set; }
+        public int[] Request { get; set; }
+        public bool ThiefLock { get; set; }
+        public int DiceResult { get; set; }
 
         public Event()
         {
             GameLog = new List<string>();
-            CounterTradeMessages = new List<string>();
         }
     }
 }

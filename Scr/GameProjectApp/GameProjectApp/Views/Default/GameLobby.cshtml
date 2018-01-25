@@ -14,7 +14,10 @@
 </form>
 
 <script type="text/javascript">
-    function formSubmit(){
+    function formSubmit() {
+        // requst some action which contains update infomation
+
+        // if(page is updated based on http status code) reload page
         document.getElementById("Refresh").submit();
         window.setTimeout(formSubmit, 1000);
     }

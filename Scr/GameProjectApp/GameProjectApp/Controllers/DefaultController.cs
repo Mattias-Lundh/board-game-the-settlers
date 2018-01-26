@@ -23,6 +23,12 @@ namespace GameProjectApp.Controllers
             return View();
         }
 
+        public ActionResult Sandbox()
+        {
+
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Game(FormCollection collection)
         {

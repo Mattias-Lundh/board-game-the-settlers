@@ -77,6 +77,18 @@ namespace GameEngine
                             action.AcceptTrade(instruction.TradeOffer, instruction.TradeAccept, instruction.TradeWith);
                         }
                     }
+                    
+                    if (instruction.Thief)
+                    {
+                        model.Events.ThiefLock = false;
+                        PlayerAction action = new PlayerAction(model);
+                        //thief moves
+                        action.PlaceThief(instruction.ThiefLocation);
+                        if(instruction.ThiefVictim != null)
+                        {//thief steals                            
+                            action.Steal(instruction.ThiefVictim);
+                        }
+                    }
 
                     break;
 

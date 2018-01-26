@@ -34,7 +34,8 @@ namespace GameEngine
         public List<int> CityChange { get; set; }
         public bool BuyResourceCard { get; set; }
 
-        public int Thief { get; set; }
+        public bool Thief { get; set; }
+        public int ThiefLocation { get; set; }
         public Player ThiefVictim { get; set; }
 
         public bool EndTurn { get; set; }

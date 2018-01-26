@@ -125,6 +125,7 @@
     <Content Include="Views\Default\Game.cshtml" />
     <Content Include="Views\Default\GameLogin.cshtml" />
     <Content Include="Views\Default\GameLobby.cshtml" />
+    <Content Include="Views\Default\Sandbox.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -40,7 +40,7 @@ namespace GameProjectApp.Controllers
                     break;
                 case "Instruction":
                     instruction = NormalGameInstruction(collection);
-                    break;
+                    break;                    
                 default:
                     throw new Exception("something went wrong");
             }

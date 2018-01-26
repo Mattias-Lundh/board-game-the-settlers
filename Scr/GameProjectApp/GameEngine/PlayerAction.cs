@@ -62,7 +62,7 @@ namespace GameEngine
         public void EndTurn()
         {
             Game.Events.GameLog.Add(Game.ActivePlayer.Name + " ends the turn");
-            if (Game.Players.IndexOf(Game.ActivePlayer) == Game.Players.Count -1)
+            if (Game.Players.IndexOf(Game.ActivePlayer) == Game.Players.Count - 1)
             {
                 Game.ActivePlayer = Game.Players[0];
             }
@@ -71,7 +71,7 @@ namespace GameEngine
                 Game.ActivePlayer = Game.Players[Game.Players.IndexOf(Game.ActivePlayer) + 1];
             }
         }
-        
+
         public void Steal(Player player)
         {
             if (player.Inventory.HandSize > 0)
@@ -138,9 +138,104 @@ namespace GameEngine
 
         public void RollDice()
         {
+            int[] result = new int[3];
             //incomplete
-            //Game.DiceRoll = new int[3];
+            //Game.DiceRoll = new int[3];            
+            SetTurnRewards(result[2]);
+
         }
+
+        private void SetTurnRewards(int roll)
+        {
+            Game.Events.TurnReward = new Dictionary<Player, int[]>();
+            Dictionary<Player, int[]> result = new Dictionary<Player, int[]>();
+
+            foreach (Player player in Game.Players)
+            {
+                result.Add(player, new int[5] { 0, 0, 0, 0, 0 });
+            }
+            if (roll != 7)
+            {
+                List<List<int>> hexBuildings = FindHexagonBuildingLocations();
+
+                for (int i = 0; i < 19; i++)
+                {
+                    if (Game.Events.DiceResult == Game.Board.ResourceNumber[i])
+                    {
+                        foreach (int buildinglocation in hexBuildings[i])
+                        {
+                            if (Game.Board.Settlement[buildinglocation] != null)
+                            {
+                                int resourceInt = FindResource(Game.Board.HexGridImgPath[i]);
+                                result[Game.Board.Settlement[buildinglocation]][resourceInt] += 1;
+                            }
+                            if (Game.Board.City[buildinglocation] != null)
+                            {
+                                int resourceInt = FindResource(Game.Board.HexGridImgPath[i]);
+                                result[Game.Board.Settlement[buildinglocation]][resourceInt] += 2;
+                            }
+                        }
+                    }
+                }
+            }
+            Game.Events.TurnReward = result;
+        }
+
+        private int FindResource(string path)
+        {
+            //Wool [0]
+            //Brick [1]
+            //Ore [2]
+            //Lumber [3]
+            //Grain [4]
+
+            if (path.Contains("Pasture"))
+            {
+                return 0;
+            }
+            if (path.Contains("Hill"))
+            {
+                return 1;
+            }
+            if (path.Contains("Mountain"))
+            {
+                return 2;
+            }
+            if (path.Contains("Forest"))
+            {
+                return 3;
+            }
+            if (path.Contains("Field"))
+            {
+                return 4;
+            }
+            throw new Exception("something went wrong");
+        }
+
+        //List[HexId]
+        //List[buildingId near hex]
+        private List<List<int>> FindHexagonBuildingLocations()
+        {
+            List<List<int>> result = new List<List<int>>();
+
+            string[] data = File.ReadAllLines(Environment.CurrentDirectory + @"/data/buildingHex.txt");
+            foreach (string line in data)
+            {
+                int building1 = Convert.ToInt32(line.Substring(line.IndexOf(':') + 1, 2).Replace(",", ""));
+                int building2 = building1 + 1;
+                int building3 = building1 + 2;
+                int building4 = Convert.ToInt32(line.Substring(line.Length - 3).Replace(",", ""));
+                int building5 = building4 + 1;
+                int building6 = building4 + 2;
+
+                List<int> hex = new List<int>();
+                hex.AddRange(new int[] { building1, building2, building3, building4, building5, building6 });
+                result.Add(hex);
+            }
+
+            return result;
+        }
+
 
         public void OfferTrade(int[] offer, int[] request)
         {
@@ -186,8 +281,8 @@ namespace GameEngine
 
             string message = player.Name + " will trade" + offerConcat + ". if you provide" + requestConcat;
 
-            Game.Events.Deal = new TradeDeal(player, offer, request);
-            Game.Events.Deal.Message = message;
+            Game.Events.Deals.Add(new TradeDeal(player, offer, request));
+            Game.Events.Deals[Game.Events.Deals.Count - 1].Message = message;
         }
 
         public void AcceptTrade(int[] offer, int[] request, Player TradeParticipant)
@@ -217,6 +312,7 @@ namespace GameEngine
             TradeParticipant.Inventory.Grain -= request[4];
 
             Game.Events.GameLog.Add(Game.ActivePlayer.Name + " trades with " + TradeParticipant.Name);
+            Game.Events.Deals.Clear();
         }
 
         public void TradeWithBank(int[] offer, int[] request)
@@ -247,6 +343,16 @@ namespace GameEngine
             Game.Bank.WoolBank += offer[4];
 
             Game.Events.GameLog.Add(Game.ActivePlayer.Name + " trades with the bank");
+        }
+
+        public void UseDevelopmentCard(Bank.DevelopmentCard card)
+        {
+            switch (card)
+            {
+                case Bank.DevelopmentCard.BuildRoad:
+                    break;
+                    //more
+            }
         }
 
         public void BuyDevelopmentCard()

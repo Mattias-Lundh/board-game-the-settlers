@@ -50,6 +50,12 @@ namespace GameEngine
                         }
                     }
 
+                    if (instruction.BuyDevelopmentCard)
+                    {
+                        PlayerAction action = new PlayerAction(model);
+                        action.BuyDevelopmentCard();
+                    }
+
                     if (instruction.TradeOffer != null)
                     {
                         //Other player is willing to trade
@@ -89,6 +95,21 @@ namespace GameEngine
                             action.Steal(instruction.ThiefVictim);
                         }
                     }
+
+                    //player end turn
+                    if (instruction.EndTurn)
+                    {
+                        PlayerAction action = new PlayerAction(model);
+                        action.EndTurn();
+                        action.RollDice();
+                        model.Events.PayDay = true;
+                    }
+                    else
+                    {
+                        model.Events.PayDay = false;
+                    }
+
+
 
                     break;
 

@@ -32,13 +32,14 @@ namespace GameEngine
         public List<int> RoadChange { get; set; }
         public List<int> SettlementChange { get; set; }
         public List<int> CityChange { get; set; }
-        public bool BuyResourceCard { get; set; }
+        public bool BuyDevelopmentCard { get; set; }
+        public Bank.DevelopmentCard UseDevelopmentCard { get; set; }
+        public int Monopoly { get; set; }
 
         public bool Thief { get; set; }
         public int ThiefLocation { get; set; }
         public Player ThiefVictim { get; set; }
 
-        public bool EndTurn { get; set; }
-            
+        public bool EndTurn { get; set; }            
     }
 }

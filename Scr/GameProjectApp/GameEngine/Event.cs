@@ -10,11 +10,13 @@ namespace GameEngine
     {
         public List<string> GameLog { get; set; }
         public string TradeMessage { get; set; }
-        public TradeDeal Deal { get; set; }
+        public List<TradeDeal> Deals { get; set; }
         public int[] Offer { get; set; }
         public int[] Request { get; set; }
         public bool ThiefLock { get; set; }
         public int DiceResult { get; set; }
+        public Dictionary<Player,int[]> TurnReward { get; set; }
+        public bool PayDay { get; set; }
 
         public Event()
         {

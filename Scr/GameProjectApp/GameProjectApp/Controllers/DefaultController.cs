@@ -26,7 +26,7 @@ namespace GameProjectApp.Controllers
 
         public void SetGameChangeFlagsForAllParticipants(Guid gameId)
         {
-            foreach(User user in FindAllUsersInGame(gameId))
+            foreach (User user in FindAllUsersInGame(gameId))
             {
                 user.NewGameContent = true;
             }
@@ -34,9 +34,9 @@ namespace GameProjectApp.Controllers
 
         public User FindUser(string userId)
         {
-            foreach(User user in Users)
+            foreach (User user in Users)
             {
-                if(user.Id == userId)
+                if (user.Id == userId)
                 {
                     return user;
                 }
@@ -47,9 +47,9 @@ namespace GameProjectApp.Controllers
         private List<User> FindAllUsersInGame(Guid gameId)
         {
             List<User> result = new List<User>();
-            foreach(User user in Users)
+            foreach (User user in Users)
             {
-                if(user.InGameId == gameId)
+                if (user.InGameId == gameId)
                 {
                     result.Add(user);
                 }
@@ -143,9 +143,9 @@ namespace GameProjectApp.Controllers
         {
             Guid ThisGame = Guid.Parse(collection["gameId"]);
 
-            if(collection["poke"] == "refresh")
+            if (collection["poke"] == "refresh")
             {
-                if(FindUser(collection["PlayerId"]).NewGameContent)
+                if (FindUser(collection["PlayerId"]).NewGameContent)
                 {
                     return View(SettlersOfCatan.FindGame(ThisGame));
                 }
@@ -162,7 +162,7 @@ namespace GameProjectApp.Controllers
                 throw new Exception("something went wrong");
             }
 
-            
+
             GameStateModel model = UpdateGame(instruction);
             SetGameChangeFlagsForAllParticipants(ThisGame);
             return View(model);
@@ -171,17 +171,11 @@ namespace GameProjectApp.Controllers
         //                                                                                     GAME LOBBY
         public ActionResult GameLobby(FormCollection collection)
         {
-            //check if user is registered
-            if (GetUserName(Session.SessionID) != collection["userName"] || collection["userName"] == "")
-            {
-                ViewBag.Message = "invalid User Name";
-                ViewBag.UserName = GetUserName(Session.SessionID);
-                return View("Login");
-            }
+            string id = Session.SessionID;
+            GameLobby thisLobby = FindGameLobby(FindUser(id).InGameId.ToString());
             // start game button pressed
             if (collection["formType"] == "newGame")
             {
-                GameLobby thisLobby = FindGameLobby(collection["gameId"]);
                 GameInstruction instruction = CreateGameInstruction(thisLobby);
                 GameStateModel model = UpdateGame(instruction);
                 //flag game as started
@@ -198,17 +192,61 @@ namespace GameProjectApp.Controllers
                 }
                 else
                 {
-                    return View("Game", SettlersOfCatan.FindGame(FindGameLobby(collection["gameId"]).Id));
+                    return View("Game", SettlersOfCatan.FindGame(thisLobby.Id));
                 }
             }
-
-            
             // joined lobby successfully
-            return View();
+            return View(thisLobby);
         }
         //                                                                                     BROWSE LOBBY
         public ActionResult BrowseLobby(FormCollection collection)
         {
+            string id = Session.SessionID;
+
+            //check if user is registered
+            if (!UserExists(id) || collection["userName"] == "")
+            {
+                ViewBag.Message = "invalid User Name";
+                ViewBag.UserName = GetUserName(Session.SessionID);
+                return View("Login");
+            }
+            //create game
+            if (collection["createLobby"] != null)
+            {
+                Guid lobbyId = Guid.NewGuid();
+                GameLobby lobby = new GameLobby(FindUser(id), lobbyId);
+                //link player to game
+                FindUser(id).InGameId = lobbyId;
+                lobby.Participants.Add(FindUser(id));
+                // set lobby values
+                lobby.Name = collection["createLobby"];
+                switch (collection["template"])
+                {
+                    case "tutorial":
+                        lobby.Template = BoardState.BoardOptions.tutorial;
+                        break;
+                    case "center":
+                        lobby.Template = BoardState.BoardOptions.center;
+                        break;
+                    case "random":
+                        lobby.Template = BoardState.BoardOptions.random;
+                        break;
+                    default:
+                        throw new Exception("invalid template");
+                }
+                lobby.RequiredPlayers = Convert.ToInt32(collection["players"]);
+                Games.Add(lobby);
+                return View("GameLobby", lobby);
+            }
+            //Join game
+            if (collection["joinLobby"] != null)
+            {
+                //link player to game
+                GameLobby lobby = FindGameLobby(collection["joinLobby"]);
+                FindUser(id).InGameId = lobby.Id;
+                lobby.Participants.Add(FindUser(id));
+                return View("GameLobby");
+            }
             return View();
         }
 
@@ -232,7 +270,7 @@ namespace GameProjectApp.Controllers
             {
                 Type = GameInstruction.InstructionType.newGame,
                 GameId = gameLobby.Id,
-                BoardTemplate = gameLobby.Template                
+                BoardTemplate = gameLobby.Template
             };
 
             //populate game with players

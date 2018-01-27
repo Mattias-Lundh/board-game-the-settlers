@@ -8,13 +8,14 @@ namespace GameProjectApp.Models
     public class GameLobby
     {
         public Guid Id { get; set; }
+        public string Name { get; set; }
         public List<User> Participants { get; set; }
-        public int requiredPlayers = 1;
+        public int RequiredPlayers { get; set; }
         public bool Started { get; set; } 
         public GameEngine.BoardState.BoardOptions Template { get; set; }
-        public GameLobby(User host)
+        public GameLobby(User host, Guid id)
         {
-            Id = Guid.NewGuid();
+            Id = id;
             Participants = new List<User> { host };
             Started = false;
         }        

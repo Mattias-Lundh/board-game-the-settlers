@@ -5,3 +5,21 @@
 
 <h2>BrowseLobby</h2>
 
+
+
+<div id='2'></div>
+
+<!-- java script -->
+
+<form action='BrowseLobby' method='post'>
+    <p>Game Name</p>
+    <input type='text' name='createLobby' /><br/>
+    <p>How many players?</p>
+    <input type='radio' name='players' value='3' checked='checked' />3
+    <input type='radio' name='players' value='4' />4
+    <input type='radio' name='players' value='5' />5<br />
+    <input type='radio' name='template' value='tutorial' checked='checked' />tutorial
+    <input type='radio' name='template' value='center' />center
+    <input type='radio' name='template' value='random' />random<br />
+    <input type='submit' value='Create Game' />
+</form>

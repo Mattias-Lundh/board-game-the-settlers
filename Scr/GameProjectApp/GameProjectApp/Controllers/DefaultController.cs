@@ -172,7 +172,7 @@ namespace GameProjectApp.Controllers
         public ActionResult GameLobby(FormCollection collection)
         {
             //check if user is registered
-            if (GetUserName(Session.SessionID) != collection["userName"])
+            if (GetUserName(Session.SessionID) != collection["userName"] || collection["userName"] == "")
             {
                 ViewBag.Message = "invalid User Name";
                 ViewBag.UserName = GetUserName(Session.SessionID);
@@ -201,6 +201,8 @@ namespace GameProjectApp.Controllers
                     return View("Game", SettlersOfCatan.FindGame(FindGameLobby(collection["gameId"]).Id));
                 }
             }
+
+            
             // joined lobby successfully
             return View();
         }

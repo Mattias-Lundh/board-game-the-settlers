@@ -5,13 +5,14 @@ using System.Web;
 
 namespace GameProjectApp.Models
 {
-    public class Game
+    public class GameLobby
     {
         public Guid Id { get; set; }
         public List<User> Participants { get; set; }
         public int requiredPlayers = 1;
         public bool Started { get; set; } 
-        public Game(User host)
+        public GameEngine.BoardState.BoardOptions Template { get; set; }
+        public GameLobby(User host)
         {
             Id = Guid.NewGuid();
             Participants = new List<User> { host };

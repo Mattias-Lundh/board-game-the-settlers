@@ -15,7 +15,7 @@ namespace GameEngine
         {
             get
             {
-                return Program.FindGame(GameId);
+                return SettlersOfCatan.FindGame(GameId);
             }
         }
         //new game

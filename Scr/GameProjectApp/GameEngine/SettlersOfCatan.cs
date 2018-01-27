@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameEngine
 {
-    public class Program
+    public class SettlersOfCatan
     {
         private static List<GameStateModel> Games { get; set; }
 

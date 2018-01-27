@@ -11,7 +11,7 @@ namespace GameProjectApp.Controllers
     public class DefaultController : Controller
     {
         public static List<User> Users { get; set; } = new List<User>();
-
+        public static List<GameLobby> Games { get; set; } = new List<GameLobby>();
         public bool UserExists(string id)
         {
             foreach (User user in Users)
@@ -24,6 +24,39 @@ namespace GameProjectApp.Controllers
             return false;
         }
 
+        public void SetGameChangeFlagsForAllParticipants(Guid gameId)
+        {
+            foreach(User user in FindAllUsersInGame(gameId))
+            {
+                user.NewGameContent = true;
+            }
+        }
+
+        public User FindUser(string userId)
+        {
+            foreach(User user in Users)
+            {
+                if(user.Id == userId)
+                {
+                    return user;
+                }
+            }
+            throw new Exception("cant find user");
+        }
+
+        private List<User> FindAllUsersInGame(Guid gameId)
+        {
+            List<User> result = new List<User>();
+            foreach(User user in Users)
+            {
+                if(user.InGameId == gameId)
+                {
+                    result.Add(user);
+                }
+            }
+            return result;
+        }
+
         public string GetUserName(string id)
         {
             foreach (User user in Users)
@@ -34,6 +67,30 @@ namespace GameProjectApp.Controllers
                 }
             }
             return "";
+        }
+
+        public GameLobby FindGameLobby(string gameLobbyId)
+        {
+            foreach (GameLobby game in Games)
+            {
+                if (game.Id.ToString() == gameLobbyId)
+                {
+                    if (game.Started)
+                    {
+                        return game;
+                    }
+                }
+            }
+            throw new Exception("Game not found");
+        }
+
+        public bool GameStarted(string gameLobbyId)
+        {
+            if (FindGameLobby(gameLobbyId).Started)
+            {
+                return true;
+            }
+            return false;
         }
 
         //GET: Default 
@@ -54,7 +111,7 @@ namespace GameProjectApp.Controllers
 
             return View();
         }
-                                                                                             
+
         public ActionResult Register(FormCollection collection)
         {
 
@@ -84,58 +141,73 @@ namespace GameProjectApp.Controllers
         [HttpPost]
         public ActionResult Game(FormCollection collection)
         {
-            GameInstruction instruction;
-            switch (collection["FormType"])
+            Guid ThisGame = Guid.Parse(collection["gameId"]);
+
+            if(collection["poke"] == "refresh")
             {
-                case "newGame":
-                    instruction = CreateGameInstruction(collection);
-                    break;
-                case "Instruction":
-                    instruction = NormalGameInstruction(collection);
-                    break;
-                default:
-                    throw new Exception("something went wrong");
+                if(FindUser(collection["PlayerId"]).NewGameContent)
+                {
+                    return View(SettlersOfCatan.FindGame(ThisGame));
+                }
+                return new HttpStatusCodeResult(304, "Not Modified");
             }
+
+            GameInstruction instruction;
+            if (collection["formType"] == "normal")
+            {
+                instruction = NormalGameInstruction(collection);
+            }
+            else
+            {
+                throw new Exception("something went wrong");
+            }
+
+            
             GameStateModel model = UpdateGame(instruction);
+            SetGameChangeFlagsForAllParticipants(ThisGame);
             return View(model);
         }
 
         //                                                                                     GAME LOBBY
         public ActionResult GameLobby(FormCollection collection)
         {
+            //check if user is registered
             if (GetUserName(Session.SessionID) != collection["userName"])
             {
                 ViewBag.Message = "invalid User Name";
                 ViewBag.UserName = GetUserName(Session.SessionID);
                 return View("Login");
             }
-
+            // start game button pressed
+            if (collection["formType"] == "newGame")
+            {
+                GameLobby thisLobby = FindGameLobby(collection["gameId"]);
+                GameInstruction instruction = CreateGameInstruction(thisLobby);
+                GameStateModel model = UpdateGame(instruction);
+                //flag game as started
+                thisLobby.Started = true;
+                //go to game page
+                return View("Game", model);
+            }
+            //auto redirect when game starts
             if (collection["poke"] == "refresh")
             {
-                if (false)
+                if (!GameStarted(collection["gameId"]))
                 {
-                    //return new HttpStatusCodeResult(304, "Not Modified");
+                    return new HttpStatusCodeResult(304, "Not Modified");
+                }
+                else
+                {
+                    return View("Game", SettlersOfCatan.FindGame(FindGameLobby(collection["gameId"]).Id));
                 }
             }
+            // joined lobby successfully
             return View();
         }
         //                                                                                     BROWSE LOBBY
         public ActionResult BrowseLobby(FormCollection collection)
         {
             return View();
-        }
-
-        public bool StartGame(Game game)
-        {
-            if (game.Participants.Count >= game.requiredPlayers)
-            {
-                game.Participants = (List<User>)Randomize(game.Participants);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         private IEnumerable<T> Randomize<T>(IEnumerable<T> source)
@@ -147,44 +219,27 @@ namespace GameProjectApp.Controllers
 
         private GameStateModel UpdateGame(GameInstruction instruction)
         {
-            return Program.ExecuteInstruction(instruction);
+            return SettlersOfCatan.ExecuteInstruction(instruction);
         }
 
-        private GameInstruction CreateGameInstruction(FormCollection collection)
+        private GameInstruction CreateGameInstruction(GameLobby gameLobby)
         {
-            // --- required input ---
-            //PlayerCount
-            //player" + i + "Name
-            //player" + i + "Id
-            //template
+            gameLobby.Participants = (List<User>)Randomize(gameLobby.Participants);
 
-            GameInstruction result = new GameInstruction();
-            result.Type = GameInstruction.InstructionType.newGame;
-            //set game Id
-            result.GameId = Guid.NewGuid();
+            GameInstruction result = new GameInstruction
+            {
+                Type = GameInstruction.InstructionType.newGame,
+                GameId = gameLobby.Id,
+                BoardTemplate = gameLobby.Template                
+            };
+
             //populate game with players
             result.NewGamePlayers = new List<string>();
-            for (int i = 1; i <= Convert.ToInt32(collection["PlayerCount"]); i++)
+            for (int i = 1; i <= gameLobby.Participants.Count; i++)
             {
-                result.NewGamePlayers.Add(collection["player" + i + "Name"]);
-                result.NewGamePlayersId.Add(collection["player" + i + "Id"]);
+                result.NewGamePlayers.Add(gameLobby.Participants[i].Name);
+                result.NewGamePlayersId.Add(gameLobby.Participants[i].Id);
             }
-            //define setup template for board
-            BoardState.BoardOptions template = BoardState.BoardOptions.tutorial;
-            switch (collection["template"])
-            {
-                case "tutorial":
-                    template = BoardState.BoardOptions.tutorial;
-                    break;
-                case "random":
-                    template = BoardState.BoardOptions.random;
-                    break;
-                case "center":
-                    template = BoardState.BoardOptions.center;
-                    break;
-            }
-            result.BoardTemplate = template;
-
             return result;
         }
 

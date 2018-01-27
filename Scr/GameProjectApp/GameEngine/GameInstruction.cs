@@ -41,6 +41,6 @@ namespace GameEngine
         public int ThiefLocation { get; set; }
         public Player ThiefVictim { get; set; }
 
-        public bool EndTurn { get; set; }            
+        public bool EndTurn { get; set; }
     }
 }

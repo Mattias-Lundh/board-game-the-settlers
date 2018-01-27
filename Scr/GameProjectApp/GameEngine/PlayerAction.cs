@@ -139,8 +139,7 @@ namespace GameEngine
         public void RollDice()
         {
             int[] result = new int[3];
-            //incomplete
-            //Game.DiceRoll = new int[3];            
+            Game.Events.DiceResult = result;           
             SetTurnRewards(result[2]);
 
         }
@@ -160,7 +159,7 @@ namespace GameEngine
 
                 for (int i = 0; i < 19; i++)
                 {
-                    if (Game.Events.DiceResult == Game.Board.ResourceNumber[i])
+                    if (Game.Events.DiceResult[2] == Game.Board.ResourceNumber[i])
                     {
                         foreach (int buildinglocation in hexBuildings[i])
                         {
@@ -503,6 +502,60 @@ namespace GameEngine
             }
 
             return result;
+        }
+
+        public void AddResources(int[] resources, Player player)
+        {
+            //Wool [0]
+            //Brick [1]
+            //Ore [2]
+            //Lumber [3]
+            //Grain [4]
+
+            player.Inventory.Wool += resources[0];
+            player.Inventory.Brick += resources[1];
+            player.Inventory.Ore += resources[2];
+            player.Inventory.Lumber += resources[3];
+            player.Inventory.Grain += resources[4];
+        }
+
+        public int TakeResources (int resource, Player player)
+        {
+            int result = 0;
+            switch (resource)
+            {
+                case 0:
+                    result += player.Inventory.Wool;
+                    player.Inventory.Wool = 0;
+                    break;
+                case 1:
+                    result += player.Inventory.Brick;
+                    player.Inventory.Brick = 0;
+                    break;
+                case 2:
+                    result += player.Inventory.Ore;
+                    player.Inventory.Ore = 0;
+                    break;
+                case 3:
+                    result += player.Inventory.Lumber;
+                    player.Inventory.Lumber = 0;
+                    break;
+                case 4:
+                    result += player.Inventory.Grain;
+                    player.Inventory.Grain = 0;
+                    break;
+            }
+
+            return result;
+        }
+
+        public void ReduceBankResources(int[] resources)
+        {
+            Game.Bank.WoolBank -= resources[0];
+            Game.Bank.BrickBank -= resources[1];
+            Game.Bank.OreBank -= resources[2];
+            Game.Bank.LumberBank -= resources[3];
+            Game.Bank.GrainBank -= resources[4];
         }
     }
 }

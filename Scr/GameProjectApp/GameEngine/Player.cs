@@ -18,6 +18,24 @@ namespace GameEngine
         public int LongestRoad { get; set; }
         public bool HasLongestRoad { get; set; }
         public int VictoryPoints { get; set; }
+        public int HiddenVictoryPoints { get; set; }
+        public int TotalVictoryPoints
+        {
+            get
+            {
+                int sum = 0;
+                if (HasLargestArmy)
+                {
+                    sum += 2;
+                }
+                if (HasLongestRoad)
+                {
+                    sum += 2;
+                }
+
+                return VictoryPoints + HiddenVictoryPoints + sum;
+            }
+        }
 
         public Player(string name, string id, Color color)
         {

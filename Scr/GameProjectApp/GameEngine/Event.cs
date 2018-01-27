@@ -14,7 +14,7 @@ namespace GameEngine
         public int[] Offer { get; set; }
         public int[] Request { get; set; }
         public bool ThiefLock { get; set; }
-        public int DiceResult { get; set; }
+        public int[] DiceResult { get; set; }
         public Dictionary<Player,int[]> TurnReward { get; set; }
         public bool PayDay { get; set; }
 

@@ -22,12 +22,12 @@ namespace GameEngine
 
                 case GameInstruction.InstructionType.normal:
                     model = FindGame(instruction.GameId);
+                    PlayerAction action = new PlayerAction(model);
                     //build road
                     if (instruction.RoadChange != null)
                     {
                         foreach (int roadLocation in instruction.RoadChange)
                         {
-                            PlayerAction action = new PlayerAction(model);
                             action.BuildRoad(roadLocation);
                         }
                     }
@@ -36,7 +36,6 @@ namespace GameEngine
                     {
                         foreach (int SettlementLocation in instruction.SettlementChange)
                         {
-                            PlayerAction action = new PlayerAction(model);
                             action.BuildSettlement(SettlementLocation);
                         }
                     }
@@ -45,15 +44,49 @@ namespace GameEngine
                     {
                         foreach (int CityLocation in instruction.CityChange)
                         {
-                            PlayerAction action = new PlayerAction(model);
                             action.BuildCity(CityLocation);
                         }
                     }
-
+                    //development card
                     if (instruction.BuyDevelopmentCard)
                     {
-                        PlayerAction action = new PlayerAction(model);
                         action.BuyDevelopmentCard();
+                    }
+
+                    switch (instruction.UseDevelopmentCard)
+                    {
+                        case Bank.DevelopmentCard.BuildRoad:
+                            model.ActivePlayer.Inventory.Brick += 2;
+                            model.ActivePlayer.Inventory.Lumber += 2;
+                            model.ActivePlayer.Inventory.DevelopmentCards.Remove(Bank.DevelopmentCard.BuildRoad);
+                            model.Events.GameLog.Add(model.ActivePlayer.Name + " Uses Build road Development Card");
+                            break;
+                        case Bank.DevelopmentCard.Monopoly:
+                            int amount = 0;
+                            foreach (Player player in model.Players)
+                            {
+                                amount += action.TakeResources(instruction.Monopoly, player);
+                            }
+                            int[] resources = new int[5];
+                            resources[instruction.Monopoly] = amount;
+                            action.AddResources(resources, model.ActivePlayer);
+                            model.ActivePlayer.Inventory.DevelopmentCards.Remove(Bank.DevelopmentCard.Monopoly);
+                            model.Events.GameLog.Add(model.ActivePlayer.Name + " Uses Monopoly Development Card");
+                            break;
+                        case Bank.DevelopmentCard.Soldier:
+                            model.ActivePlayer.Soldier += 1;
+                            model.ActivePlayer.Inventory.DevelopmentCards.Remove(Bank.DevelopmentCard.Soldier);
+                            model.Events.GameLog.Add(model.ActivePlayer.Name + " Uses Soldier Development Card");
+                            break;
+                        case Bank.DevelopmentCard.YearOfPlenty:
+                            action.AddResources(instruction.YearOfPlenty, model.ActivePlayer);
+                            action.ReduceBankResources(instruction.YearOfPlenty);
+                            model.ActivePlayer.Inventory.DevelopmentCards.Remove(Bank.DevelopmentCard.YearOfPlenty);
+                            model.Events.GameLog.Add(model.ActivePlayer.Name + " Uses Year Of Plenty Development Card");
+                            break;
+                        default:
+                            // no development card action requested
+                            break;
                     }
 
                     if (instruction.TradeOffer != null)
@@ -61,36 +94,31 @@ namespace GameEngine
                         //Other player is willing to trade
                         if (instruction.TradeCounterOffer)
                         {
-                            PlayerAction action = new PlayerAction(model);
                             action.OfferTrade(instruction.TradeOffer, instruction.TradeAccept, instruction.TradeWith);
                         }
                         //player makes a bank trade
                         else if (instruction.BankTrade)
                         {
-                            PlayerAction action = new PlayerAction(model);
                             action.TradeWithBank(instruction.TradeOffer, instruction.TradeAccept);
                         }
                         //player make a public trade offer
                         else if (instruction.TradeWith == null)
                         {
-                            PlayerAction action = new PlayerAction(model);
                             action.OfferTrade(instruction.TradeOffer, instruction.TradeAccept);
                         }
                         //player confirms an excisting trade offer
                         else
                         {
-                            PlayerAction action = new PlayerAction(model);
                             action.AcceptTrade(instruction.TradeOffer, instruction.TradeAccept, instruction.TradeWith);
                         }
                     }
-                    
+
                     if (instruction.Thief)
                     {
                         model.Events.ThiefLock = false;
-                        PlayerAction action = new PlayerAction(model);
                         //thief moves
                         action.PlaceThief(instruction.ThiefLocation);
-                        if(instruction.ThiefVictim != null)
+                        if (instruction.ThiefVictim != null)
                         {//thief steals                            
                             action.Steal(instruction.ThiefVictim);
                         }
@@ -99,7 +127,6 @@ namespace GameEngine
                     //player end turn
                     if (instruction.EndTurn)
                     {
-                        PlayerAction action = new PlayerAction(model);
                         action.EndTurn();
                         action.RollDice();
                         model.Events.PayDay = true;
@@ -108,8 +135,6 @@ namespace GameEngine
                     {
                         model.Events.PayDay = false;
                     }
-
-
 
                     break;
 

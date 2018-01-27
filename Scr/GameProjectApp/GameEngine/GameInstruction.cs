@@ -35,6 +35,7 @@ namespace GameEngine
         public bool BuyDevelopmentCard { get; set; }
         public Bank.DevelopmentCard UseDevelopmentCard { get; set; }
         public int Monopoly { get; set; }
+        public int[] YearOfPlenty { get; set; }
 
         public bool Thief { get; set; }
         public int ThiefLocation { get; set; }

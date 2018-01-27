@@ -1,0 +1,24 @@
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="Start.css">
+</head>
+<div class="login-page">
+    <p><big> Welcome to settlers of Catan </big> </p><br>
+    @ViewBag.Message<br>
+    <div class="form">
+        <form action="Register" class="register-form" method="post">
+            <input type="text" placeholder="name" name="name"/>
+            <input type="text" placeholder="email address" name="email"/>
+            <input type="submit" value="create" />
+            <p class="message">Already registered? <a href="#">Sign In</a></p>
+        </form>
+        <form action="GameLobby" class="login-form" method="post">
+            <input type="text" placeholder="@ViewBag.UserName" name="userName" />
+            <input type="submit" value="login" />
+        </form>
+    </div>
+</div>

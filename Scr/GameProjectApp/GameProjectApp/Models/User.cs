@@ -8,6 +8,15 @@ namespace GameProjectApp.Models
     public class User
     {
         public string Id { get; set; }
-        public bool NewGameState { get; set; } = true;
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public Guid InGameId { get; set; }
+
+        public User(string id, string name, string email)
+        {
+            Id = id;
+            Name = name;
+            Email = email;
+        }
     }
 }

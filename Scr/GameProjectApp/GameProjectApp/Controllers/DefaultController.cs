@@ -10,6 +10,33 @@ namespace GameProjectApp.Controllers
 {
     public class DefaultController : Controller
     {
+        public static List<User> Users { get; set; } = new List<User>();
+
+        public bool UserExists(string id)
+        {
+            foreach (User user in Users)
+            {
+                if (user.Id == id)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public string GetUserName(string id)
+        {
+
+            foreach (User user in Users)
+            {
+                if (user.Id == id)
+                {
+                    return user.Name;
+                }
+            }
+            return "";
+        }
+
         // GET: Default
         public ActionResult Index()
         {
@@ -17,9 +44,8 @@ namespace GameProjectApp.Controllers
             return View();
         }
 
-        public ActionResult GameLogin()
+        public ActionResult Login()
         {
-
             return View();
         }
 
@@ -27,6 +53,32 @@ namespace GameProjectApp.Controllers
         {
 
             return View();
+        }
+
+        public ActionResult Register(FormCollection collection)
+        {
+            
+            if (UserExists(Session.SessionID))
+            {
+                ViewBag.Message = "You are already registered";
+                ViewBag.UserName = GetUserName(Session.SessionID);
+                return View("Login");
+            } 
+            
+            if (collection["name"] == "" || collection["email"] == "")
+            {
+                ViewBag.Message = "Please Fill in text boxes";
+                ViewBag.UserName = GetUserName(Session.SessionID);
+                return View("Login");
+            }
+            else
+            {
+                Session["Player"] = "created";
+                Users.Add(new User(Session.SessionID, collection["name"], collection["email"]));
+                ViewBag.Message = "New user created";
+            }
+            ViewBag.UserName = GetUserName(Session.SessionID);
+            return View("Login");
         }
 
         [HttpPost]
@@ -40,7 +92,7 @@ namespace GameProjectApp.Controllers
                     break;
                 case "Instruction":
                     instruction = NormalGameInstruction(collection);
-                    break;                    
+                    break;
                 default:
                     throw new Exception("something went wrong");
             }
@@ -51,42 +103,70 @@ namespace GameProjectApp.Controllers
 
         public ActionResult GameLobby(FormCollection collection)
         {
-            User user = new User();
 
-            if (collection["poke"] == "refresh")
+            if(GetUserName(Session.SessionID) != collection["userName"])
             {
-                if (!MetaData.Me(Session.SessionID).NewGameState)
-                {
-                    //stop exectuting code
-                    //dont return
-                    //abort
-                    //break
-                    //ignore request
-                    return new HttpStatusCodeResult(304, "Not Modified");
-                }
+                ViewBag.Message = "invalid User Name";
+                ViewBag.UserName = GetUserName(Session.SessionID);
+                return View("Login");
+            }
+
+            //Users user = new Users();
+
+            //if (collection["poke"] == "refresh")
+            //{
+            //    if (!MetaData.Me(Session.SessionID).NewGameState)
+            //    {
+            //        //stop exectuting code
+            //        //dont return
+            //        //abort
+            //        //break
+            //        //ignore request
+            //        return new HttpStatusCodeResult(304, "Not Modified");
+            //    }
+            //}
+            //else
+            //{
+            //    if (MetaData.Me(Session.SessionID) != null)
+            //    {
+            //        user = MetaData.Me(Session.SessionID);
+            //    }
+            //    else
+            //    {
+            //        Session["Player"] = "participating";
+            //        user.Id = Session.SessionID;
+            //        MetaData.Users.Add(user);
+
+            //    }
+
+            //    user.NewGameState = false;
+
+            //    foreach (Users u in MetaData.NotMe(Session.SessionID))
+            //    {
+            //        u.NewGameState = true;
+            //    }
+            //}
+            //return View(MetaData.Me(Session.SessionID));
+            return View();
+        }
+
+        public bool StartGame(Game game)
+        {
+            if (game.Participants.Count >= game.requiredPlayers)
+            {
+                game.Participants = (List<User>)Randomize(game.Participants);
+                return true;
             }
             else
             {
-                if (MetaData.Me(Session.SessionID) != null)
-                {
-                    user = MetaData.Me(Session.SessionID);
-                }
-                else
-                {
-                    Session["Player"] = "participating";
-                    user.Id = Session.SessionID;
-                    MetaData.Users.Add(user);
-
-                }
-
-                user.NewGameState = false;
-
-                foreach (User u in MetaData.NotMe(Session.SessionID))
-                {
-                    u.NewGameState = true;
-                }
+                return false;
             }
-            return View(MetaData.Me(Session.SessionID));
+        }
+
+        private IEnumerable<T> Randomize<T>(IEnumerable<T> source)
+        {
+            Random rnd = new Random();
+            return source.OrderBy<T, int>((item) => rnd.Next());
         }
 
 

@@ -92,6 +92,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\Start.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
@@ -108,7 +109,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\MetaData.cs" />
+    <Compile Include="Models\Game.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -123,9 +124,9 @@
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Default\Game.cshtml" />
-    <Content Include="Views\Default\GameLogin.cshtml" />
     <Content Include="Views\Default\GameLobby.cshtml" />
     <Content Include="Views\Default\Sandbox.cshtml" />
+    <Content Include="Views\Default\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

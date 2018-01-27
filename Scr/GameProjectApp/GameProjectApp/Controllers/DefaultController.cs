@@ -26,7 +26,6 @@ namespace GameProjectApp.Controllers
 
         public string GetUserName(string id)
         {
-
             foreach (User user in Users)
             {
                 if (user.Id == id)
@@ -37,34 +36,35 @@ namespace GameProjectApp.Controllers
             return "";
         }
 
-        // GET: Default
+        //GET: Default 
+        //                                                                                     INDEX
         public ActionResult Index()
         {
 
             return View();
         }
-
+        //                                                                                     LOGIN                                                                      
         public ActionResult Login()
         {
             return View();
         }
-
+        //                                                                                     SANDBOX
         public ActionResult Sandbox()
         {
 
             return View();
         }
-
+                                                                                             
         public ActionResult Register(FormCollection collection)
         {
-            
+
             if (UserExists(Session.SessionID))
             {
                 ViewBag.Message = "You are already registered";
                 ViewBag.UserName = GetUserName(Session.SessionID);
                 return View("Login");
-            } 
-            
+            }
+
             if (collection["name"] == "" || collection["email"] == "")
             {
                 ViewBag.Message = "Please Fill in text boxes";
@@ -80,7 +80,7 @@ namespace GameProjectApp.Controllers
             ViewBag.UserName = GetUserName(Session.SessionID);
             return View("Login");
         }
-
+        //                                                                                     GAME
         [HttpPost]
         public ActionResult Game(FormCollection collection)
         {
@@ -100,53 +100,28 @@ namespace GameProjectApp.Controllers
             return View(model);
         }
 
-
+        //                                                                                     GAME LOBBY
         public ActionResult GameLobby(FormCollection collection)
         {
-
-            if(GetUserName(Session.SessionID) != collection["userName"])
+            if (GetUserName(Session.SessionID) != collection["userName"])
             {
                 ViewBag.Message = "invalid User Name";
                 ViewBag.UserName = GetUserName(Session.SessionID);
                 return View("Login");
             }
 
-            //Users user = new Users();
-
-            //if (collection["poke"] == "refresh")
-            //{
-            //    if (!MetaData.Me(Session.SessionID).NewGameState)
-            //    {
-            //        //stop exectuting code
-            //        //dont return
-            //        //abort
-            //        //break
-            //        //ignore request
-            //        return new HttpStatusCodeResult(304, "Not Modified");
-            //    }
-            //}
-            //else
-            //{
-            //    if (MetaData.Me(Session.SessionID) != null)
-            //    {
-            //        user = MetaData.Me(Session.SessionID);
-            //    }
-            //    else
-            //    {
-            //        Session["Player"] = "participating";
-            //        user.Id = Session.SessionID;
-            //        MetaData.Users.Add(user);
-
-            //    }
-
-            //    user.NewGameState = false;
-
-            //    foreach (Users u in MetaData.NotMe(Session.SessionID))
-            //    {
-            //        u.NewGameState = true;
-            //    }
-            //}
-            //return View(MetaData.Me(Session.SessionID));
+            if (collection["poke"] == "refresh")
+            {
+                if (false)
+                {
+                    //return new HttpStatusCodeResult(304, "Not Modified");
+                }
+            }
+            return View();
+        }
+        //                                                                                     BROWSE LOBBY
+        public ActionResult BrowseLobby(FormCollection collection)
+        {
             return View();
         }
 

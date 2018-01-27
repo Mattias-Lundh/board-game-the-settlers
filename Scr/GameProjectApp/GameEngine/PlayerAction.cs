@@ -28,6 +28,7 @@ namespace GameEngine
 
         public void BuildSettlement(int location)
         {
+            UpdateTradePerk(location);
             Game.Board.Settlement[location] = Game.ActivePlayer;
             Game.ActivePlayer.Inventory.Grain -= 1;
             Game.ActivePlayer.Inventory.Wool -= 1;
@@ -39,6 +40,56 @@ namespace GameEngine
             Game.Bank.LumberBank += 1;
 
             Game.Events.GameLog.Add(Game.ActivePlayer.Name + " builds a settlement");
+        }
+        private void UpdateTradePerk(int location)
+        {
+            //Wool [0]
+            //Brick [1]
+            //Ore [2]
+            //Lumber [3]
+            //Grain [4]
+            //Any [5]
+            switch (location)
+            {
+                //3:1 trade with bank enabled
+                case 0:
+                case 1:
+                case 14:
+                case 15:
+                case 26:
+                case 37:
+                case 47:
+                case 48:
+                    Game.ActivePlayer.TradePerk[5] = true;
+                    break;
+                //2:1 wool trade
+                case 3:
+                case 4:
+                    Game.ActivePlayer.TradePerk[0] = true;
+                    break;
+                //2:1 ore trade
+                case 7:
+                case 17:
+                    Game.ActivePlayer.TradePerk[2] = true;
+                    break;
+                //2:1 Grain trade
+                case 28:
+                case 38:
+                    Game.ActivePlayer.TradePerk[4] = true;
+                    break;
+                //2:1 Brick trade
+                case 45:
+                case 46:
+                    Game.ActivePlayer.TradePerk[1] = true;
+                    break;
+                //2:1 Lumber trade
+                case 50:
+                case 51:
+                    Game.ActivePlayer.TradePerk[3] = true;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void BuildCity(int location)
@@ -139,7 +190,7 @@ namespace GameEngine
         public void RollDice()
         {
             int[] result = new int[3];
-            Game.Events.DiceResult = result;           
+            Game.Events.DiceResult = result;
             SetTurnRewards(result[2]);
 
         }
@@ -519,7 +570,7 @@ namespace GameEngine
             player.Inventory.Grain += resources[4];
         }
 
-        public int TakeResources (int resource, Player player)
+        public int TakeResources(int resource, Player player)
         {
             int result = 0;
             switch (resource)

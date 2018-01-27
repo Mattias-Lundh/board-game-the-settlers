@@ -13,6 +13,7 @@ namespace GameEngine
         public string Name { get; set; }
         public Color Color { get; set; }
         public Inventory Inventory { get; set; }
+        public bool[] TradePerk { get; set; }
         public int Soldier { get; set; }
         public bool HasLargestArmy { get; set; }
         public int LongestRoad { get; set; }
@@ -49,6 +50,7 @@ namespace GameEngine
             LongestRoad = 0;
             HasLongestRoad = false;
             VictoryPoints = 0;
+            TradePerk = new bool[] { false, false, false, false, false, false };
         }
     }
 }

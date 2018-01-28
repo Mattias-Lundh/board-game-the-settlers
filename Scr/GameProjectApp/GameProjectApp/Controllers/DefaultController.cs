@@ -75,10 +75,7 @@ namespace GameProjectApp.Controllers
             {
                 if (game.Id.ToString() == gameLobbyId)
                 {
-                    if (game.Started)
-                    {
-                        return game;
-                    }
+                    return game;
                 }
             }
             throw new Exception("Game not found");
@@ -108,8 +105,8 @@ namespace GameProjectApp.Controllers
         public ActionResult Sandbox()
         {
             ViewBag.Id = Session.SessionID;
-            ViewBag.Settlement = @"\\Content\\Images\\doodad\\Settlement.png";
-            ViewBag.City = @"\\Content\\Images\\doodad\\City.png";
+            ViewBag.Settlement = @"\\Content\\Images\\doodad\\Settlement.png"; //not in use
+            ViewBag.City = @"\\Content\\Images\\doodad\\City.png"; //not in use
             //set up fake game for testing
             //   ----- FAKE DATA -----
             GameInstruction instruction = new GameInstruction();
@@ -168,7 +165,7 @@ namespace GameProjectApp.Controllers
         public ActionResult Game(FormCollection collection)
         {
             ViewBag.Id = Session.SessionID;
-            Guid ThisGame = Guid.Parse(collection["gameId"]);
+            Guid ThisGame = FindUser(Session.SessionID).InGameId;
 
             if (collection["poke"] == "refresh")
             {
@@ -191,7 +188,8 @@ namespace GameProjectApp.Controllers
 
             GameStateModel model = UpdateGame(instruction);
             SetGameChangeFlagsForAllParticipants(ThisGame);
-            return View(model);
+            //                                                                <--- "Board" = DELETE
+            return View("Board",model);
         }
 
         //                                                                                     GAME LOBBY
@@ -207,7 +205,8 @@ namespace GameProjectApp.Controllers
                 //flag game as started
                 thisLobby.Started = true;
                 //go to game page
-                return View("Game", model);
+                //                                                                <--- "Board" = "Game"
+                return View("Board", model);
             }
             //auto redirect when game starts
             if (collection["poke"] == "refresh")
@@ -243,7 +242,6 @@ namespace GameProjectApp.Controllers
                 GameLobby lobby = new GameLobby(FindUser(id), lobbyId);
                 //link player to game
                 FindUser(id).InGameId = lobbyId;
-                lobby.Participants.Add(FindUser(id));
                 // set lobby values
                 lobby.Name = collection["createLobby"];
                 switch (collection["template"])
@@ -290,7 +288,10 @@ namespace GameProjectApp.Controllers
 
         private GameInstruction CreateGameInstruction(GameLobby gameLobby)
         {
-            gameLobby.Participants = (List<User>)Randomize(gameLobby.Participants);
+            List<User> tempList = new List<User>();
+            tempList.AddRange(Randomize(gameLobby.Participants));
+            gameLobby.Participants.Clear();
+            gameLobby.Participants.AddRange(tempList);
 
             GameInstruction result = new GameInstruction
             {

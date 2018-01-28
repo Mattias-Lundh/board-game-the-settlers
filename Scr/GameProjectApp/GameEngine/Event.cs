@@ -8,6 +8,7 @@ namespace GameEngine
 {
     public class Event
     {
+        public bool Setup { get; set; }
         public List<string> GameLog { get; set; }
         public string TradeMessage { get; set; }
         public List<TradeDeal> Deals { get; set; }
@@ -21,6 +22,7 @@ namespace GameEngine
         public Event()
         {
             GameLog = new List<string>();
+            Setup = true;
         }
     }
 }

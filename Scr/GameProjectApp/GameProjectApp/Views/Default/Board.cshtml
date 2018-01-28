@@ -9,189 +9,80 @@
     <link href="~/Content/settlerStyle.css" rel="stylesheet" />
 
 </head>
-
-
 <body>
     <div id="debug" />
     <div class="board" id="b1">
-        <div class="hexagon"><img class="hexPosition" id="hexShape0" src=@Model.Board.HexGridImgPath[0] onclick="ElementClick(this.id)"></img></div>
-        <div class="hexagon"><img class="hexPosition" id="hexShape1" src=@Model.Board.HexGridImgPath[1] onclick="ElementClick(this.id)"></img></div>
-        <div class="hexagon"><img class="hexPosition" id="hexShape2" src=@Model.Board.HexGridImgPath[2] onclick="ElementClick(this.id)"></img></div>
+        
+        @for (var i = 0; i < 19; i++)
+        {
+            <div class="hexagon"><img class="hexPosition" id="hexShape@(i)" src=@Model.Board.HexGridImgPath[i] onclick="ElementClick(this.id)"></div>
+        }
 
-        <div class="hexagon"><img class="hexPosition" id="hexShape3" src=@Model.Board.HexGridImgPath[3] onclick="ElementClick(this.id)"></img></div>
-        <div class="hexagon"><img class="hexPosition" id="hexShape4" src=@Model.Board.HexGridImgPath[4] onclick="ElementClick(this.id)"></img></div>
-        <div class="hexagon"><img class="hexPosition" id="hexShape5" src=@Model.Board.HexGridImgPath[5] onclick="ElementClick(this.id)"></img></div>
-        <div class="hexagon"><img class="hexPosition" id="hexShape6" src=@Model.Board.HexGridImgPath[6] onclick="ElementClick(this.id)"></img></div>
 
-        <div class="hexagon"><img class="hexPosition" id="hexShape7" src=@Model.Board.HexGridImgPath[7] onclick="ElementClick(this.id)"></img></div>
-        <div class="hexagon"><img class="hexPosition" id="hexShape8" src=@Model.Board.HexGridImgPath[8] onclick="ElementClick(this.id)"></img></div>
-        <div class="hexagon"><img class="hexPosition" id="hexShape9" src=@Model.Board.HexGridImgPath[9] onclick="ElementClick(this.id)"></img></div>
-        <div class="hexagon"><img class="hexPosition" id="hexShape10" src=@Model.Board.HexGridImgPath[10] onclick="ElementClick(this.id)"></img></div>
-        <div class="hexagon"><img class="hexPosition" id="hexShape11" src=@Model.Board.HexGridImgPath[11] onclick="ElementClick(this.id)"></img></div>
+        @for (var i = 0; i < 53; i++)
+        {
 
-        <div class="hexagon"><img class="hexPosition" id="hexShape12" src=@Model.Board.HexGridImgPath[12] onclick="ElementClick(this.id)"></img></div>
-        <div class="hexagon"><img class="hexPosition" id="hexShape13" src=@Model.Board.HexGridImgPath[13] onclick="ElementClick(this.id)"></img></div>
-        <div class="hexagon"><img class="hexPosition" id="hexShape14" src=@Model.Board.HexGridImgPath[14] onclick="ElementClick(this.id)"></img></div>
-        <div class="hexagon"><img class="hexPosition" id="hexShape15" src=@Model.Board.HexGridImgPath[15] onclick="ElementClick(this.id)"></img></div>
+            if (Model.Board.Settlement[i] != null)
+            {
+                <img class="structureDot" id="s@(i)" onclick="ElementClick(this.id)" borderColor="@Model.Board.Settlement[i].Color.Name.ToLower()">
+            }
+            else if (Model.Board.City[i] != null)
+            {
+                <img class="structureDot" id="s@(i)" onclick="ElementClick(this.id)" width="25" height="25" borderColor="@Model.Board.City[i].Color.Name.ToLower()">
+            }
+            else
+            {
+                <img class="structureDot" id="s@(i)" onclick="ElementClick(this.id)" background-color="white">
+            }
+        }
 
-        <div class="hexagon"><img class="hexPosition" id="hexShape16" src=@Model.Board.HexGridImgPath[16] onclick="ElementClick(this.id)"></img></div>
-        <div class="hexagon"><img class="hexPosition" id="hexShape17" src=@Model.Board.HexGridImgPath[17] onclick="ElementClick(this.id)"></img></div>
-        <div class="hexagon"><img class="hexPosition" id="hexShape18" src=@Model.Board.HexGridImgPath[18] onclick="ElementClick(this.id)"></img></div>
+        @for (var i = 0; i < 72; i++)
+        {
+            if (Model.Board.Road[i] != null)
+            {
+                <div class="road" id="r@(i)" onclick="ElementClick(this.id)" background-color="@Model.Board.City[i].Color.Name.ToLower()"></div>
+            }
+            else
+            {
+                <div class="road" id="r@(i)" onclick="ElementClick(this.id)" background-color="white"></div>
+            }
+        }
 
-        <img class="structureDot" id="s0" onclick="ElementClick(this.id)"></img>
-        <div class="structureDot" id="s1" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s2" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s3" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s4" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s5" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s6" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s7" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s8" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s9" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s10" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s11" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s12" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s13" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s14" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s15" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s16" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s17" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s18" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s19" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s20" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s21" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s22" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s23" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s24" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s25" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s26" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s27" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s28" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s29" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s30" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s31" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s32" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s33" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s34" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s35" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s36" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s37" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s38" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s39" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s40" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s41" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s42" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s43" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s44" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s45" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s46" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s47" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s48" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s49" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s50" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s51" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s52" onclick="ElementClick(this.id)"></div>
-        <div class="structureDot" id="s53" onclick="ElementClick(this.id)"></div>
 
-        <div class="road" id="r0" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r1" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r2" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r3" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r4" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r5" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r6" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r7" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r8" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r9" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r10" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r11" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r12" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r13" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r14" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r15" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r16" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r17" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r18" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r19" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r20" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r21" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r22" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r23" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r24" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r25" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r26" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r27" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r28" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r29" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r30" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r31" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r32" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r33" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r34" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r35" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r36" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r37" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r38" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r39" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r40" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r41" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r42" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r43" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r44" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r45" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r46" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r47" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r48" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r49" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r50" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r51" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r52" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r53" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r54" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r55" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r56" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r57" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r58" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r59" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r60" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r61" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r62" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r63" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r64" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r65" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r66" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r67" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r68" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r69" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r70" onclick="ElementClick(this.id)"></div>
-        <div class="road" id="r71" onclick="ElementClick(this.id)"></div>
     </div>
+    <button onclick="SendForm()">END TURN</button>
 </body>
 </html>
 
-<script>
+<form action="Game" method="post" id="form">
+    <input type="hidden" name="formType" value="normal"/>
+</form>
+
+<script type="text/javascript">
     //Global variables
-    var SelectedAction = "buildSettlement";  //default = "none"
-    var ThiefLock = true; //"@Model.Events.ThiefLock";
+    var SelectedAction = "none";
+    var ThiefLock = "@Model.Events.ThiefLock";
     var Thief = @Model.Board.Thief;
     //Post data
     function GenerateFormItem(name, value) {
         var element = document.createElement("input");
         element.name = "name";
         element.value = "value";
-
+        element.type = "hidden";
+        getElementById("form").appendChild(element);
     }
 
     //loading extras
     window.onload = RepositionThief(@Model.Board.Thief)
-
+    window.onload = PlaceSettlements();
+    window.onload = PlaceCities();
     //event manager
     function ElementClick(id) {
         //alert('you clicked element: ' + id);
         //Debug("test");
         //building
         if ("@ViewBag.Id" == "@Model.ActivePlayer.Id") {
-            if (!ThiefLock) {
+            if (ThiefLock != "true") {
             //roads
             if (SelectedAction == "buildRoad" & id.includes("r") & document.getElementById(id).style.backgroundColor == ""){
             //document.getElementById(id).style.Border = "@Model.ActivePlayer.Color.Name.ToLower()";
@@ -213,7 +104,7 @@
                 Thief = num;
                 RepositionThief(num);
                 document.getElementById("thief").parentNode.removeChild(document.getElementById("thief"));
-                ThiefLock = false;
+                ThiefLock = "false";
             }
         }
 
@@ -234,6 +125,12 @@
         ThiefElement.style.top = topOffset + 40;
         ThiefElement.style.left = leftOffset + 40;
         document.getElementById("b1").appendChild(ThiefElement);
+    }
+
+    function SendForm() {
+        if (!@Model.Events.Setup){
+            document.getElementById("form").submit();
+        }
     }
     //programmer helper functions
     function Debug(parameterString) {

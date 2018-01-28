@@ -91,6 +91,25 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\Hex\Desert.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\Hex\Field.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\Hex\Forest.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\Hex\Hill.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\Hex\Mountain.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\Hex\Pasture.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\settlerStyle.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Start.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -128,6 +147,8 @@
     <Content Include="Views\Default\Sandbox.cshtml" />
     <Content Include="Views\Default\Login.cshtml" />
     <Content Include="Views\Default\BrowseLobby.cshtml" />
+    <Content Include="Views\Default\partialTest.cshtml" />
+    <Content Include="Views\Default\Board.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

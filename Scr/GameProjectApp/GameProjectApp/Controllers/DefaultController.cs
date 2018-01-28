@@ -108,8 +108,33 @@ namespace GameProjectApp.Controllers
         //                                                                                     SANDBOX
         public ActionResult Sandbox()
         {
+            //set up fake game for testing
+            //   ----- FAKE DATA -----
+            GameInstruction instruction = new GameInstruction();
 
-            return View();
+            instruction.Type = GameInstruction.InstructionType.newGame;
+            instruction.GameId = Guid.NewGuid();
+            instruction.BoardTemplate = BoardState.BoardOptions.tutorial;
+
+            //populate game with players
+            instruction.NewGamePlayers = new List<string>();
+            instruction.NewGamePlayersId = new List<string>();
+
+            instruction.NewGamePlayers.Add("Frodo");
+            instruction.NewGamePlayersId.Add("1");
+
+            instruction.NewGamePlayers.Add("Sam");
+            instruction.NewGamePlayersId.Add("2");
+
+            instruction.NewGamePlayers.Add("Gandalf");
+            instruction.NewGamePlayersId.Add("3");
+
+            instruction.NewGamePlayers.Add("Gimli");
+            instruction.NewGamePlayersId.Add("4");
+            //   ----- FAKE DATA END -----
+
+            GameStateModel model = UpdateGame(instruction);
+            return View("Board", model);
         }
 
         public ActionResult Register(FormCollection collection)
@@ -275,7 +300,8 @@ namespace GameProjectApp.Controllers
 
             //populate game with players
             result.NewGamePlayers = new List<string>();
-            for (int i = 1; i <= gameLobby.Participants.Count; i++)
+            result.NewGamePlayersId = new List<string>();
+            for (int i = 0; i < gameLobby.Participants.Count; i++)
             {
                 result.NewGamePlayers.Add(gameLobby.Participants[i].Name);
                 result.NewGamePlayersId.Add(gameLobby.Participants[i].Id);

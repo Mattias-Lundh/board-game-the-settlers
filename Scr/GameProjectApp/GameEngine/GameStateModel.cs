@@ -31,9 +31,9 @@ namespace GameEngine
             //set starting player
             Random rdm = new Random();
             ActivePlayer = Players[rdm.Next(0, instruction.NewGamePlayers.Count - 1)];
+            Events = new Event();
+            Bank = new Bank();
 
-            Events.GameLog.Add("A new game has begun");
-            Events.GameLog.Add(ActivePlayer.Name + " turn to deploy 1 settlement and 1 road");
         }
     }
 }

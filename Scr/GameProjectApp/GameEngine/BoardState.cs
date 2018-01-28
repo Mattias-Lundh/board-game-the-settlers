@@ -63,56 +63,61 @@ namespace GameEngine
         private int FindDesert()
         {
             //Looks for the position of the Desert Hex
-            return 0;
+            for(int i = 0; i < HexGridImgPath.Length; i++)
+            {
+                if (HexGridImgPath[i].Contains("Desert"))
+                {
+                    return i;
+                }
+            }
+            throw new Exception("desert not found");
         }
 
         private string[] GenerateHexPaths(BoardOptions choosenOption)
         {
-            // MODIFY
             int maxDesert = 1;
-            int maxBrick = 3;
+            int maxHill = 3;
             int maxFeild = 4;
             int maxForest = 4;
-            int maxHill = 4;
+            int maxPasture = 4;
             int maxMountain = 3;
 
-            // MODIFY
-            string desert = @"/Images/hex/Desert.png";
-            string hill = @"/Images/hex/Hill.png";
-            string feild = @"/Images/hex/Field.png";
-            string forest = @"/Images/hex/Forest.png";
-            string pasture = @"/Images/hex/Pasture.png";
-            string mountain = @"/Images/hex/Mountain.png";
+            string desert = @"/Content/Images/Hex/Desert.png";
+            string hill = @"/Content/Images/Hex/Hill.png";
+            string field = @"/Content/Images/Hex/Field.png";
+            string forest = @"/Content/Images/Hex/Forest.png";
+            string pasture = @"/Content/Images/Hex/Pasture.png";
+            string mountain = @"/Content/Images/Hex/Mountain.png";
             string[] pathToHexpicture = new string[19];
             switch (choosenOption)
             {
                 case BoardOptions.tutorial:
                     pathToHexpicture[0] = hill;
-                    pathToHexpicture[1] = feild;
+                    pathToHexpicture[1] = field;
                     pathToHexpicture[2] = forest;
                     pathToHexpicture[3] = pasture;
                     pathToHexpicture[4] = mountain;
                     pathToHexpicture[5] = hill;
-                    pathToHexpicture[6] = feild;
+                    pathToHexpicture[6] = field;
                     pathToHexpicture[7] = forest;
                     pathToHexpicture[8] = pasture;
                     pathToHexpicture[9] = desert;
                     pathToHexpicture[10] = mountain;
                     pathToHexpicture[11] = hill;
-                    pathToHexpicture[12] = feild;
+                    pathToHexpicture[12] = field;
                     pathToHexpicture[13] = forest;
                     pathToHexpicture[14] = pasture;
                     pathToHexpicture[15] = forest;
                     pathToHexpicture[16] = mountain;
-                    pathToHexpicture[17] = feild;
+                    pathToHexpicture[17] = field;
                     pathToHexpicture[18] = pasture;
 
                     break;
                 case BoardOptions.random:
-                    pathToHexpicture = PlacePicturePath(hill, maxBrick, pathToHexpicture);
-                    pathToHexpicture = PlacePicturePath(feild, maxFeild, pathToHexpicture);
+                    pathToHexpicture = PlacePicturePath(hill, maxHill, pathToHexpicture);
+                    pathToHexpicture = PlacePicturePath(field, maxFeild, pathToHexpicture);
                     pathToHexpicture = PlacePicturePath(forest, maxForest, pathToHexpicture);
-                    pathToHexpicture = PlacePicturePath(pasture, maxHill, pathToHexpicture);
+                    pathToHexpicture = PlacePicturePath(pasture, maxPasture, pathToHexpicture);
                     pathToHexpicture = PlacePicturePath(mountain, maxMountain, pathToHexpicture);
                     pathToHexpicture = PlacePicturePath(desert, maxDesert, pathToHexpicture);
 
@@ -121,10 +126,10 @@ namespace GameEngine
                 case BoardOptions.center:
                     //Always desert on CenterTile.
                     pathToHexpicture[9] = desert;
-                    pathToHexpicture = PlacePicturePath(hill, maxBrick, pathToHexpicture);
-                    pathToHexpicture = PlacePicturePath(feild, maxFeild, pathToHexpicture);
+                    pathToHexpicture = PlacePicturePath(hill, maxHill, pathToHexpicture);
+                    pathToHexpicture = PlacePicturePath(field, maxFeild, pathToHexpicture);
                     pathToHexpicture = PlacePicturePath(forest, maxForest, pathToHexpicture);
-                    pathToHexpicture = PlacePicturePath(pasture, maxHill, pathToHexpicture);
+                    pathToHexpicture = PlacePicturePath(pasture, maxPasture, pathToHexpicture);
                     pathToHexpicture = PlacePicturePath(mountain, maxMountain, pathToHexpicture);
                     break;
 

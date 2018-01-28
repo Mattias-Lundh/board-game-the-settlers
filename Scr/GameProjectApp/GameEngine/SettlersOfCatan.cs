@@ -18,6 +18,8 @@ namespace GameEngine
             {
                 case GameInstruction.InstructionType.newGame:
                     model = new GameStateModel(instruction);
+                    model.Events.GameLog.Add("A new game has begun");
+                    model.Events.GameLog.Add(model.ActivePlayer.Name + " turn to deploy 1 settlement and 1 road");
                     break;
 
                 case GameInstruction.InstructionType.normal:

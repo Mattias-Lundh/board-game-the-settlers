@@ -44,3 +44,9 @@ C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProje
 C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProjectApp\bin\System.Web.Webpages.Razor.xml
 C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProjectApp\bin\System.Web.Helpers.xml
 C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProjectApp\bin\System.Web.Mvc.xml
+C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProjectApp\bin\Content\Images\Hex\Desert.png
+C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProjectApp\bin\Content\Images\Hex\Field.png
+C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProjectApp\bin\Content\Images\Hex\Hill.png
+C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProjectApp\bin\Content\Images\Hex\Mountain.png
+C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProjectApp\bin\Content\Images\Hex\Pasture.png
+C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProjectApp\bin\Content\Images\Hex\Forest.png

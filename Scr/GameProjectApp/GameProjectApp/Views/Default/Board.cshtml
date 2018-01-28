@@ -7,12 +7,12 @@
 <html>
 <head>
     <link href="~/Content/settlerStyle.css" rel="stylesheet" />
-    
+
 </head>
 
 
 <body>
-    <div id="debug"/>
+    <div id="debug" />
     <div class="board" id="b1">
         <div class="hexagon"><img class="hexPosition" id="hexShape0" src=@Model.Board.HexGridImgPath[0] onclick="ElementClick(this.id)"></img></div>
         <div class="hexagon"><img class="hexPosition" id="hexShape1" src=@Model.Board.HexGridImgPath[1] onclick="ElementClick(this.id)"></img></div>
@@ -38,7 +38,7 @@
         <div class="hexagon"><img class="hexPosition" id="hexShape17" src=@Model.Board.HexGridImgPath[17] onclick="ElementClick(this.id)"></img></div>
         <div class="hexagon"><img class="hexPosition" id="hexShape18" src=@Model.Board.HexGridImgPath[18] onclick="ElementClick(this.id)"></img></div>
 
-        <div class="structureDot" id="s0" onclick="ElementClick(this.id)"></div>
+        <img class="structureDot" id="s0" onclick="ElementClick(this.id)"></img>
         <div class="structureDot" id="s1" onclick="ElementClick(this.id)"></div>
         <div class="structureDot" id="s2" onclick="ElementClick(this.id)"></div>
         <div class="structureDot" id="s3" onclick="ElementClick(this.id)"></div>
@@ -171,9 +171,9 @@
 
 <script>
     //Global variables
-    var SelectedAction = "buildRoad";  //default = "none"
-    var ThiefLock = "@Model.Events.ThiefLock"
-
+    var SelectedAction = "buildSettlement";  //default = "none"
+    var ThiefLock = true; //"@Model.Events.ThiefLock";
+    var Thief = @Model.Board.Thief;
     //Post data
     function GenerateFormItem(name, value) {
         var element = document.createElement("input");
@@ -183,12 +183,47 @@
     }
 
     //loading extras
-    window.onload = function LoadThief() {
+    window.onload = RepositionThief(@Model.Board.Thief)
+
+    //event manager
+    function ElementClick(id) {
+        //alert('you clicked element: ' + id);
+        //Debug("test");
+        //building
+        if ("@ViewBag.Id" == "@Model.ActivePlayer.Id") {
+            if (!ThiefLock) {
+            //roads
+            if (SelectedAction == "buildRoad" & id.includes("r") & document.getElementById(id).style.backgroundColor == ""){
+            //document.getElementById(id).style.Border = "@Model.ActivePlayer.Color.Name.ToLower()";
+            }
+
+            //City
+            if (SelectedAction == "buildCity" & id.includes("s") & document.getElementById(id).style.borderColor == "@Model.ActivePlayer.Color.Name.ToLower()") {
+                document.getElementById(id).style.width = 25;
+                document.getElementById(id).style.height = 25;
+            }
+
+            //settlement
+            if (SelectedAction == "buildSettlement" & id.includes("s") & document.getElementById(id).style.borderColor == "") {
+                document.getElementById(id).style.borderColor = "@Model.ActivePlayer.Color.Name.ToLower()";
+            }
+            //move Thief
+            } else if (id.includes("hexShape") & !(id.includes("hexShape"+Thief))) {
+                var num = id.substring(8);
+                Thief = num;
+                RepositionThief(num);
+                document.getElementById("thief").parentNode.removeChild(document.getElementById("thief"));
+                ThiefLock = false;
+            }
+        }
+
+    }
+
+    function RepositionThief(location) {
         var hexId = "hexShape";
-        hexId = hexId.concat(@Model.Board.Thief);
+        hexId = hexId.concat(location);
         var leftOffset = document.getElementById(hexId).offsetLeft;
         var topOffset = document.getElementById(hexId).offsetTop;
-
         var ThiefElement = document.createElement("img");
         ThiefElement.src = '\\Content\\Images\\doodad\\Thief.png';
         ThiefElement.setAttribute("height", "70");
@@ -199,16 +234,6 @@
         ThiefElement.style.top = topOffset + 40;
         ThiefElement.style.left = leftOffset + 40;
         document.getElementById("b1").appendChild(ThiefElement);
-    }
-    //event manager
-    function ElementClick(id) {
-        //alert('you clicked element: ' + id);
-        //Debug("test");        
-        //building roads
-        if ("@ViewBag.Id" == "@Model.ActivePlayer.Id" & SelectedAction == "buildRoad" & id.includes("r") & document.getElementById(id).style.backgroundColor == "") {
-            document.getElementById(id).style.backgroundColor = "@Model.ActivePlayer.Color.Name";
-        }
-
     }
     //programmer helper functions
     function Debug(parameterString) {

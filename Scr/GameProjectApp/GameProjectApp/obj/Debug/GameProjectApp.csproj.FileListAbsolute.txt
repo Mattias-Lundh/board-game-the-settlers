@@ -51,3 +51,5 @@ C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProje
 C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProjectApp\bin\Content\Images\Hex\Pasture.png
 C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProjectApp\bin\Content\Images\Hex\Forest.png
 C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProjectApp\bin\Content\Images\doodad\Thief.png
+C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProjectApp\bin\Content\Images\doodad\City.png
+C:\Users\matti\Source\Repos\board-game-the-settlers\Scr\GameProjectApp\GameProjectApp\bin\Content\Images\doodad\Settlement.png

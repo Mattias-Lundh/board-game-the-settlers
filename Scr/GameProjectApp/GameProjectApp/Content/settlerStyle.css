@@ -100,13 +100,16 @@ html{
 	top:452
 }
 
-.structureDot{
-    width: 15px;
-    height: 15px;
-    background-color: red;
-    opacity: 0.5;  
-    border-radius: 50px;
+.structureDot {
     position: absolute;
+    width: 17px;
+    height: 17px;
+    background-color: white;
+    /*opacity: 0.5;*/
+    border-style: solid;
+    border-radius: 50px;
+    border-width: 4px;
+    border-color: black;
 }
 #s0{
     top:30px;

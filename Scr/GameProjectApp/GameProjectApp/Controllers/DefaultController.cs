@@ -108,6 +108,8 @@ namespace GameProjectApp.Controllers
         public ActionResult Sandbox()
         {
             ViewBag.Id = Session.SessionID;
+            ViewBag.Settlement = @"\\Content\\Images\\doodad\\Settlement.png";
+            ViewBag.City = @"\\Content\\Images\\doodad\\City.png";
             //set up fake game for testing
             //   ----- FAKE DATA -----
             GameInstruction instruction = new GameInstruction();

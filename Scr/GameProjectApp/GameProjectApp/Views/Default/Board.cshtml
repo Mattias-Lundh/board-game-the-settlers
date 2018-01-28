@@ -12,6 +12,7 @@
 
 
 <body>
+    <div id="debug"/>
     <div class="board" id="b1">
         <div class="hexagon"><img class="hexPosition" id="hexShape0" src=@Model.Board.HexGridImgPath[0] onclick="ElementClick(this.id)"></img></div>
         <div class="hexagon"><img class="hexPosition" id="hexShape1" src=@Model.Board.HexGridImgPath[1] onclick="ElementClick(this.id)"></img></div>
@@ -169,6 +170,19 @@
 </html>
 
 <script>
+    //Global variables
+    var SelectedAction = "buildRoad";  //default = "none"
+    var ThiefLock = "@Model.Events.ThiefLock"
+
+    //Post data
+    function GenerateFormItem(name, value) {
+        var element = document.createElement("input");
+        element.name = "name";
+        element.value = "value";
+
+    }
+
+    //loading extras
     window.onload = function LoadThief() {
         var hexId = "hexShape";
         hexId = hexId.concat(@Model.Board.Thief);
@@ -186,9 +200,22 @@
         ThiefElement.style.left = leftOffset + 40;
         document.getElementById("b1").appendChild(ThiefElement);
     }
-
+    //event manager
     function ElementClick(id) {
-        alert('you clicked element: ' + id);
+        //alert('you clicked element: ' + id);
+        //Debug("test");        
+        //building roads
+        if ("@ViewBag.Id" == "@Model.ActivePlayer.Id" & SelectedAction == "buildRoad" & id.includes("r") & document.getElementById(id).style.backgroundColor == "") {
+            document.getElementById(id).style.backgroundColor = "@Model.ActivePlayer.Color.Name";
+        }
+
+    }
+    //programmer helper functions
+    function Debug(parameterString) {
+        var element = document.createElement("div");
+        var textnode = document.createTextNode(parameterString);
+        element.appendChild(textnode);
+        document.getElementById("debug").appendChild(element);
     }
 
 </script>

@@ -97,7 +97,6 @@ namespace GameProjectApp.Controllers
         //                                                                                     INDEX
         public ActionResult Index()
         {
-
             return View();
         }
         //                                                                                     LOGIN                                                                      
@@ -108,6 +107,7 @@ namespace GameProjectApp.Controllers
         //                                                                                     SANDBOX
         public ActionResult Sandbox()
         {
+            ViewBag.Id = Session.SessionID;
             //set up fake game for testing
             //   ----- FAKE DATA -----
             GameInstruction instruction = new GameInstruction();
@@ -121,16 +121,16 @@ namespace GameProjectApp.Controllers
             instruction.NewGamePlayersId = new List<string>();
 
             instruction.NewGamePlayers.Add("Frodo");
-            instruction.NewGamePlayersId.Add("1");
+            instruction.NewGamePlayersId.Add(Session.SessionID);
 
             instruction.NewGamePlayers.Add("Sam");
-            instruction.NewGamePlayersId.Add("2");
+            instruction.NewGamePlayersId.Add(Session.SessionID);
 
             instruction.NewGamePlayers.Add("Gandalf");
-            instruction.NewGamePlayersId.Add("3");
+            instruction.NewGamePlayersId.Add(Session.SessionID);
 
             instruction.NewGamePlayers.Add("Gimli");
-            instruction.NewGamePlayersId.Add("4");
+            instruction.NewGamePlayersId.Add(Session.SessionID);
             //   ----- FAKE DATA END -----
 
             GameStateModel model = UpdateGame(instruction);
@@ -139,7 +139,6 @@ namespace GameProjectApp.Controllers
 
         public ActionResult Register(FormCollection collection)
         {
-
             if (UserExists(Session.SessionID))
             {
                 ViewBag.Message = "You are already registered";
@@ -166,6 +165,7 @@ namespace GameProjectApp.Controllers
         [HttpPost]
         public ActionResult Game(FormCollection collection)
         {
+            ViewBag.Id = Session.SessionID;
             Guid ThisGame = Guid.Parse(collection["gameId"]);
 
             if (collection["poke"] == "refresh")
@@ -186,7 +186,6 @@ namespace GameProjectApp.Controllers
             {
                 throw new Exception("something went wrong");
             }
-
 
             GameStateModel model = UpdateGame(instruction);
             SetGameChangeFlagsForAllParticipants(ThisGame);

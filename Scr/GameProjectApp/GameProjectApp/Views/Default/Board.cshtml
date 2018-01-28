@@ -12,8 +12,7 @@
 
 
 <body>
-    @Model.Board.HexGridImgPath[2]
-    <div class="board">
+    <div class="board" id="b1">
         <div class="hexagon"><img class="hexPosition" id="hexShape0" src=@Model.Board.HexGridImgPath[0]></img></div>
         <div class="hexagon"><img class="hexPosition" id="hexShape1" src=@Model.Board.HexGridImgPath[1]></img></div>
         <div class="hexagon"><img class="hexPosition" id="hexShape2" src=@Model.Board.HexGridImgPath[2]></img></div>
@@ -38,7 +37,7 @@
         <div class="hexagon"><img class="hexPosition" id="hexShape17" src=@Model.Board.HexGridImgPath[17]></img></div>
         <div class="hexagon"><img class="hexPosition" id="hexShape18" src=@Model.Board.HexGridImgPath[18]></img></div>
 
-        <div class="structureDot" id="s0"></div>
+        <div class="structureDot" id="s0" onclick="alert('click')"></div>
         <div class="structureDot" id="s1"></div>
         <div class="structureDot" id="s2"></div>
         <div class="structureDot" id="s3"></div>
@@ -168,3 +167,23 @@
     </div>
 </body>
 </html>
+
+<script>
+    window.onload = function LoadThief() {
+        var hexId = "hexShape";
+        hexId = hexId.concat(@Model.Board.Thief);
+        var leftOffset = document.getElementById(hexId).offsetLeft;
+        var topOffset = document.getElementById(hexId).offsetTop;
+
+        var ThiefElement = document.createElement("img");
+        ThiefElement.src = '\\Content\\Images\\doodad\\Thief.png';
+        ThiefElement.setAttribute("height", "70");
+        ThiefElement.setAttribute("width", "70");
+        ThiefElement.id = "thief";
+        ThiefElement.style.position = "relative";
+        ThiefElement.style.top = topOffset + 40;
+        ThiefElement.style.left = leftOffset + 40;
+        document.getElementById("b1").appendChild(ThiefElement);
+    }
+
+</script>

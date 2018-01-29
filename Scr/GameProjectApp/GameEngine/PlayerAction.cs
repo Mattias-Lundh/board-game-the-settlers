@@ -123,6 +123,55 @@ namespace GameEngine
             }
         }
 
+        public void EndSetupTurn()
+        {
+            //debug remove!!!
+            if(Game.Players.Count == 1)
+            {
+                Game.Events.SetupCollect = true;
+                Game.Events.Setup = false;
+                PlayerAction action = new PlayerAction(Game);
+                int[] resources = action.GenerateResourceBasket(33);
+                action.AddResources(resources, Game.ActivePlayer);
+                action.ReduceBankResources(resources);
+                return;
+
+            }
+            // remove end
+
+            Game.Events.SetupCounter -= 1;
+            if (!Game.Events.SetupCollect)
+            {
+                if (Game.Events.SetupCounter == 0)
+                {
+                    Game.Events.SetupCollect = true;
+                }
+                else if (Game.Players.IndexOf(Game.ActivePlayer) == Game.Players.Count - 1)
+                {
+                    Game.ActivePlayer = Game.Players[0];
+                }
+                else
+                {
+                    Game.ActivePlayer = Game.Players[Game.Players.IndexOf(Game.ActivePlayer) + 1];
+                }
+            }
+            else
+            {
+                if (Game.Events.SetupCounter <= (Game.Players.Count * -1) + 1)
+                {
+                    Game.Events.Setup = false;
+                }
+                else if (Game.Players.IndexOf(Game.ActivePlayer) == 0)
+                {
+                    Game.ActivePlayer = Game.Players[Game.Players.Count - 1];
+                }
+                else
+                {
+                    Game.ActivePlayer = Game.Players[Game.Players.IndexOf(Game.ActivePlayer) - 1];
+                }
+            }
+        }
+
         public void Steal(Player player)
         {
             if (player.Inventory.HandSize > 0)
@@ -229,6 +278,25 @@ namespace GameEngine
                 }
             }
             Game.Events.TurnReward = result;
+        }
+
+        public int[] GenerateResourceBasket(int location)
+        {
+            int[] result = new int[] { 0, 0, 0, 0, 0 };
+            List<List<int>> hexBuildings = FindHexagonBuildingLocations();
+
+            for (int i = 0; i < 19; i++)
+            {
+                foreach (int buildinglocation in hexBuildings[i])
+                {
+                    if (Game.Board.Settlement[buildinglocation] != null && location == buildinglocation)
+                    {
+                        int resourceInt = FindResource(Game.Board.HexGridImgPath[i]);
+                        result[resourceInt] += 1;
+                    }
+                }
+            }
+            return result;
         }
 
         private int FindResource(string path)

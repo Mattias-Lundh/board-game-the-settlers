@@ -31,7 +31,7 @@ namespace GameEngine
             //set starting player
             Random rdm = new Random();
             ActivePlayer = Players[rdm.Next(0, instruction.NewGamePlayers.Count - 1)];
-            Events = new Event();
+            Events = new Event(instruction.NewGamePlayers.Count);
             Bank = new Bank();
 
         }

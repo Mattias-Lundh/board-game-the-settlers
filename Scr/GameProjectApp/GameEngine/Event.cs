@@ -9,6 +9,8 @@ namespace GameEngine
     public class Event
     {
         public bool Setup { get; set; }
+        public bool SetupCollect { get; set; }
+        public int SetupCounter { get; set; }
         public List<string> GameLog { get; set; }
         public string TradeMessage { get; set; }
         public List<TradeDeal> Deals { get; set; }
@@ -19,10 +21,12 @@ namespace GameEngine
         public Dictionary<Player,int[]> TurnReward { get; set; }
         public bool PayDay { get; set; }
 
-        public Event()
+        public Event(int setupCounter)
         {
             GameLog = new List<string>();
             Setup = true;
+            SetupCollect = false;
+            SetupCounter = setupCounter;
         }
     }
 }

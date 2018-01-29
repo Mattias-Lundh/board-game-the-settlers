@@ -94,7 +94,8 @@ namespace GameProjectApp.Controllers
         //                                                                                     INDEX
         public ActionResult Index()
         {
-            return View();
+            DebugString model = new DebugString() { String = "" };
+            return View(model);
         }
         //                                                                                     LOGIN                                                                      
         public ActionResult Login()
@@ -189,13 +190,14 @@ namespace GameProjectApp.Controllers
             GameStateModel model = UpdateGame(instruction);
             SetGameChangeFlagsForAllParticipants(ThisGame);
             //                                                                <--- "Board" = DELETE
-            return View("Board",model);
+            return View("Board", model);
         }
 
         //                                                                                     GAME LOBBY
         public ActionResult GameLobby(FormCollection collection)
         {
             string id = Session.SessionID;
+            ViewBag.Id = Session.SessionID;
             GameLobby thisLobby = FindGameLobby(FindUser(id).InGameId.ToString());
             // start game button pressed
             if (collection["formType"] == "newGame")
@@ -227,7 +229,7 @@ namespace GameProjectApp.Controllers
         public ActionResult BrowseLobby(FormCollection collection)
         {
             string id = Session.SessionID;
-
+            ViewBag.Id = Session.SessionID;
             //check if user is registered
             if (!UserExists(id) || collection["userName"] == "")
             {
@@ -280,7 +282,6 @@ namespace GameProjectApp.Controllers
             return source.OrderBy<T, int>((item) => rnd.Next());
         }
 
-
         private GameStateModel UpdateGame(GameInstruction instruction)
         {
             return SettlersOfCatan.ExecuteInstruction(instruction);
@@ -313,7 +314,16 @@ namespace GameProjectApp.Controllers
 
         private GameInstruction NormalGameInstruction(FormCollection collection)
         {
-            return new GameInstruction();
+            GameInstruction result = new GameInstruction() { };
+            result.Type = GameInstruction.InstructionType.normal;
+            result.GameId = FindUser(Session.SessionID).InGameId;
+            if (collection["setup"] == "true")
+            {
+                result.RoadChange.Add(Convert.ToInt32(collection["roadChange"]));
+                result.SettlementChange.Add(Convert.ToInt32(collection["settlementChange"]));
+                result.StartingResources = Convert.ToBoolean(collection["collectResources"]);
+            }
+            return result;
         }
     }
 }

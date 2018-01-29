@@ -10,9 +10,9 @@
 
 </head>
 <body>
-    <div id="debug" />
+    <div id="debug" ></div>
     <div class="board" id="b1">
-        
+
         @for (var i = 0; i < 19; i++)
         {
             <div class="hexagon"><img class="hexPosition" id="hexShape@(i)" src=@Model.Board.HexGridImgPath[i] onclick="ElementClick(this.id)"></div>
@@ -50,62 +50,80 @@
 
 
     </div>
-    <button onclick="SendForm()">END TURN</button>
+    <button onclick="EndTurn()">END TURN</button>
 </body>
 </html>
 
 <form action="Game" method="post" id="form">
-    <input type="hidden" name="formType" value="normal"/>
+    <input type="hidden" name="formType" value="normal" />
 </form>
 
 <script type="text/javascript">
     //Global variables
+    var SetupCollect = "@Model.Events.SetupCollect.ToString().ToLower()";
+    var Setup = "@Model.Events.Setup.ToString().ToLower()";
     var SelectedAction = "none";
-    var ThiefLock = "@Model.Events.ThiefLock";
-    var Thief = @Model.Board.Thief;
+    var ThiefLock = "@Model.Events.ThiefLock.ToString().ToLower()";
+    var Thief = "@Model.Board.Thief";
     //Post data
     function GenerateFormItem(name, value) {
+
         var element = document.createElement("input");
         element.name = "name";
         element.value = "value";
         element.type = "hidden";
-        getElementById("form").appendChild(element);
+        document.getElementById("form").appendChild(element);
+        
     }
 
     //loading extras
-    window.onload = RepositionThief(@Model.Board.Thief)
-    window.onload = PlaceSettlements();
-    window.onload = PlaceCities();
+    window.onload = Load();
     //event manager
     function ElementClick(id) {
         //alert('you clicked element: ' + id);
-        //Debug("test");
         //building
         if ("@ViewBag.Id" == "@Model.ActivePlayer.Id") {
             if (ThiefLock != "true") {
-            //roads
-            if (SelectedAction == "buildRoad" & id.includes("r") & document.getElementById(id).style.backgroundColor == ""){
-            //document.getElementById(id).style.Border = "@Model.ActivePlayer.Color.Name.ToLower()";
-            }
+                //Setup
+                if (Setup == "true") {
+                    if (SelectedAction == "buildRoad" & id.includes("r") & document.getElementById(id).style.backgroundColor == "") {
+                        document.getElementById(id).style.backgroundColor = "@Model.ActivePlayer.Color.Name.ToLower()";
+                        GenerateFormItem("roadChange", id.substring(1));
+                        GenerateFormItem("setup", "true");
+                        GenerateFormItem("collectResources", SetupCollect);
+                        GenerateFormItem("formType", "normal");
+                        SetupNextPlayer();
+                    } else if (SelectedAction == "buildSettlement" & id.includes("s") & document.getElementById(id).style.borderColor == "") {
+                        document.getElementById(id).style.borderColor = "@Model.ActivePlayer.Color.Name.ToLower()";
+                        GenerateFormItem("settlementChange", id.substring(1));
+                        SelectedAction = "buildRoad";
+                    }
+                } else {                    
+                    //roads
+                    if (SelectedAction == "buildRoad" & id.includes("r") & document.getElementById(id).style.backgroundColor == "") {
+                            document.getElementById(id).style.backgroundColor = "@Model.ActivePlayer.Color.Name.ToLower()";
+                    }
 
-            //City
-            if (SelectedAction == "buildCity" & id.includes("s") & document.getElementById(id).style.borderColor == "@Model.ActivePlayer.Color.Name.ToLower()") {
-                document.getElementById(id).style.width = 25;
-                document.getElementById(id).style.height = 25;
-            }
+                    //City
+                    if (SelectedAction == "buildCity" & id.includes("s") & document.getElementById(id).style.borderColor == "@Model.ActivePlayer.Color.Name.ToLower()") {
+                        document.getElementById(id).style.width = 25;
+                        document.getElementById(id).style.height = 25;
+                    }
 
-            //settlement
-            if (SelectedAction == "buildSettlement" & id.includes("s") & document.getElementById(id).style.borderColor == "") {
-                document.getElementById(id).style.borderColor = "@Model.ActivePlayer.Color.Name.ToLower()";
-            }
-            //move Thief
-            } else if (id.includes("hexShape") & !(id.includes("hexShape"+Thief))) {
-                var num = id.substring(8);
-                Thief = num;
-                RepositionThief(num);
-                document.getElementById("thief").parentNode.removeChild(document.getElementById("thief"));
-                ThiefLock = "false";
-            }
+                    //settlement
+                    if (SelectedAction == "buildSettlement" & id.includes("s") & document.getElementById(id).style.borderColor == "") {
+                        document.getElementById(id).style.borderColor = "@Model.ActivePlayer.Color.Name.ToLower()";
+                    }
+                    //move Thief
+                }
+                } else if (id.includes("hexShape") & !(id.includes("hexShape" + Thief))) {
+                    var num = id.substring(8);
+                    Thief = num;
+                    RepositionThief(num);
+                    document.getElementById("thief").parentNode.removeChild(document.getElementById("thief"));
+                    ThiefLock = "false";
+                }
+
         }
 
     }
@@ -127,9 +145,21 @@
         document.getElementById("b1").appendChild(ThiefElement);
     }
 
-    function SendForm() {
-        if (!@Model.Events.Setup){
+    function EndTurn() {
+        if (Setup == "true"){
             document.getElementById("form").submit();
+        }
+    }
+
+    function SetupNextPlayer() {
+        document.getElementById("form").submit();
+    }
+
+    function Load() {
+        RepositionThief(@Model.Board.Thief);
+
+        if (Setup == "true") {
+            SelectedAction = "buildSettlement";
         }
     }
     //programmer helper functions

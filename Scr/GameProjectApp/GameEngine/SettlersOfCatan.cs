@@ -114,7 +114,6 @@ namespace GameEngine
                             action.AcceptTrade(instruction.TradeOffer, instruction.TradeAccept, instruction.TradeWith);
                         }
                     }
-
                     if (instruction.Thief)
                     {
                         model.Events.ThiefLock = false;
@@ -125,7 +124,6 @@ namespace GameEngine
                             action.Steal(instruction.ThiefVictim);
                         }
                     }
-
                     //player end turn
                     if (instruction.EndTurn)
                     {
@@ -137,13 +135,21 @@ namespace GameEngine
                     {
                         model.Events.PayDay = false;
                     }
-
+                    //setup
+                    if (instruction.Setup)
+                    {
+                        if (model.Events.SetupCollect)
+                        {
+                            int[] resources = action.GenerateResourceBasket(instruction.SettlementChange[0]);
+                            action.AddResources(resources, model.ActivePlayer);
+                            action.ReduceBankResources(resources);
+                        }
+                        action.EndSetupTurn();
+                    }
                     break;
-
                 default:
                     throw new Exception("unknown instruction type");
             }
-
             return model;
         }
 

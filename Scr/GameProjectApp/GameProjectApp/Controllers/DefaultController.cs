@@ -136,24 +136,7 @@ namespace GameProjectApp.Controllers
             GameStateModel model = UpdateGame(instruction);
             return View("Board", model);
         }
-        //                                                                                    REGISTER
-        public ActionResult Register(FormCollection collection)
-        {
-            if (collection["name"] == "" || collection["email"] == "")
-            {
-                ViewBag.Message = "Please Fill in text boxes";
-                ViewBag.UserName = GetUserName(Session.SessionID);
-                return View("Login");
-            }
-            else
-            {
-                Session["Player"] = "created";
-                Users.Add(new User(Session.SessionID, collection["name"], collection["email"]));
-                ViewBag.Message = "New user created";
-            }
-            ViewBag.UserName = GetUserName(Session.SessionID);
-            return View("Login");
-        }
+        
         //                                                                                     GAME
         [HttpPost]
         public ActionResult Game(FormCollection collection)
@@ -223,13 +206,18 @@ namespace GameProjectApp.Controllers
         {           
             string id = Session.SessionID;
             ViewBag.Id = Session.SessionID;
-            //check if user is registered
-            if (!UserExists(id) || collection["userName"] == "")
+            if (collection["userName"] =="")
             {
                 ViewBag.Message = "invalid User Name";
-                ViewBag.UserName = GetUserName(Session.SessionID);
                 return View("Login");
             }
+            else
+            {
+                Session["player"] = "registered";
+                User user = new User(Session.SessionID, collection["userName"]);
+                Users.Add(user);
+            }            
+
             //create game
             if (collection["createLobby"] != null)
             {

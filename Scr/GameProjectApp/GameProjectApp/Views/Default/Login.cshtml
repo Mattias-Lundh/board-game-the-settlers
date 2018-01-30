@@ -10,15 +10,16 @@
     <p><big> Welcome to settlers of Catan </big> </p><br>
     @ViewBag.Message<br>
     <div class="form">
-        <form action="Register" class="register-form" method="post">
-            <input type="text" placeholder="name" name="name"/>
-            <input type="text" placeholder="email address" name="email"/>
-            <input type="submit" value="create" />
-            <p class="message">Already registered? <a href="#">Sign In</a></p>
-        </form>
-        <form action="BrowseLobby" class="login-form" method="post">
+        <form action="BrowseLobby" class="login-form" method="post" id="loginForm">
             <input type="text" placeholder="@ViewBag.UserName" name="userName" />
-            <input type="submit" value="login" />
+            <button onclick="SubmitForm()">login</button>
         </form>
     </div>
 </div>
+<script type="text/javascript">
+    function SubmitForm() {
+        document.getElementById("loginForm").SubmitForm();
+    }
+
+
+</script>

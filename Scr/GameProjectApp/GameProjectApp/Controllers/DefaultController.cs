@@ -136,16 +136,9 @@ namespace GameProjectApp.Controllers
             GameStateModel model = UpdateGame(instruction);
             return View("Board", model);
         }
-
+        //                                                                                    REGISTER
         public ActionResult Register(FormCollection collection)
         {
-            if (UserExists(Session.SessionID))
-            {
-                ViewBag.Message = "You are already registered";
-                ViewBag.UserName = GetUserName(Session.SessionID);
-                return View("Login");
-            }
-
             if (collection["name"] == "" || collection["email"] == "")
             {
                 ViewBag.Message = "Please Fill in text boxes";
@@ -227,7 +220,7 @@ namespace GameProjectApp.Controllers
         }
         //                                                                                     BROWSE LOBBY
         public ActionResult BrowseLobby(FormCollection collection)
-        {
+        {           
             string id = Session.SessionID;
             ViewBag.Id = Session.SessionID;
             //check if user is registered

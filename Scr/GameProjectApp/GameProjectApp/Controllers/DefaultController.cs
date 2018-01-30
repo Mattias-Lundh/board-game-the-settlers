@@ -134,7 +134,7 @@ namespace GameProjectApp.Controllers
             //   ----- FAKE DATA END -----
 
             GameStateModel model = UpdateGame(instruction);
-            return View("Board", model);
+            return View("Game", model);
         }
         
         //                                                                                     GAME

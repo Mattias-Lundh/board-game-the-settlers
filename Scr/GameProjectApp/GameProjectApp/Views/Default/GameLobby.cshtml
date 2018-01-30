@@ -7,10 +7,22 @@
 <h1>@Model.Name</h1>
 <br />
 <br />
-<div>Host: @(Model.Participants[0].Name)</div>
-
-
-
+Host <br> 
+* @(Model.Participants[0].Name)
+<br />
+Players<br />
+@for (int i = 1; i < Model.Participants.Count; i++)
+{
+    @:* @(Model.Participants[i].Name)<br />
+}
+@if (Model.Participants.Count == Model.RequiredPlayers)
+{
+    @:Ready To Start. gl,hf
+}
+else
+{
+    @:Waiting for @(Model.RequiredPlayers - Model.Participants.Count) more Player(s)...
+}
 <button onclick="StartGame()">START</button>
 
 <form action="GameLobby" method="post" id="start">
@@ -24,33 +36,26 @@
             document.getElementById("start").submit();
         }
     }
+
 </script>
+<script type="text/javascript">
+    function formSubmit() {
+        // requst some action which contains update infomation
 
+        // if(page is updated based on http status code) reload page
+        document.getElementById("Refresh").submit();
+        window.setTimeout(formSubmit, 1000);
+    }
 
-
-@*<form action="GameLobby" method="POST">
-        <input type="text" name="textbox1" value="write something">
-        <input type="hidden" name="test" value="success">
-        <input type="submit" value="POST More">
-
-    </form>*@
-
-
-@*<script type="text/javascript">
-        function formSubmit() {
-            // requst some action which contains update infomation
-
-            // if(page is updated based on http status code) reload page
-            document.getElementById("Refresh").submit();
+    window.onload = function () {
+        if(@Model.Participants.Count < @Model.RequiredPlayers){
             window.setTimeout(formSubmit, 1000);
         }
+    };
+</script>
 
-        window.onload=function(){
-              window.setTimeout(formSubmit, 1000);
-        };
-    </script>
-*@
 <form action="GameLobby" method="post" id="Refresh">
     <input type="hidden" name="poke" value="refresh">
+    <input type="hidden" name="gameId" value="@Model.Id" />
 </form>
 

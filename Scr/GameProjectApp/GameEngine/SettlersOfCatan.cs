@@ -8,7 +8,7 @@ namespace GameEngine
 {
     public class SettlersOfCatan
     {
-        private static List<GameStateModel> Games { get; set; }
+        private static List<GameStateModel> Games { get; set; } = new List<GameStateModel>();
 
         public static GameStateModel ExecuteInstruction(GameInstruction instruction)
         {

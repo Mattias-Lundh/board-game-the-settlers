@@ -165,8 +165,7 @@ namespace GameProjectApp.Controllers
 
             GameStateModel model = UpdateGame(instruction);
             SetGameChangeFlagsForAllParticipants(ThisGame);
-            //                                                                <--- "Board" = DELETE
-            return View("Board", model);
+            return View(model);
         }
 
         //                                                                                     GAME LOBBY
@@ -183,14 +182,14 @@ namespace GameProjectApp.Controllers
                 //flag game as started
                 thisLobby.Started = true;
                 //go to game page
-                //                                                                <--- "Board" = "Game"
-                return View("Board", model);
+                return View("Game", model);
             }
             //auto redirect when game starts
             if (collection["poke"] == "refresh")
             {
                 if (!GameStarted(collection["gameId"]))
                 {
+                    return View(thisLobby);
                     return new HttpStatusCodeResult(304, "Not Modified");
                 }
                 else
@@ -246,15 +245,16 @@ namespace GameProjectApp.Controllers
                 return View("GameLobby", lobby);
             }
             //Join game
-            if (collection["joinLobby"] != null)
+            ViewBag.JoinLobby = collection["joinLobby"];
+            if (collection["joinLobby"] != null && collection["joinLobby"] != "unselected")
             {
                 //link player to game
                 GameLobby lobby = FindGameLobby(collection["joinLobby"]);
                 FindUser(id).InGameId = lobby.Id;
                 lobby.Participants.Add(FindUser(id));
-                return View("GameLobby");
-            }
-            return View();
+                return View("GameLobby",lobby);
+            }            
+            return View(Games);
         }
 
         private IEnumerable<T> Randomize<T>(IEnumerable<T> source)

@@ -125,20 +125,6 @@ namespace GameEngine
 
         public void EndSetupTurn()
         {
-            //debug remove!!!
-            if(Game.Players.Count == 1)
-            {
-                Game.Events.SetupCollect = true;
-                Game.Events.Setup = false;
-                PlayerAction action = new PlayerAction(Game);
-                int[] resources = action.GenerateResourceBasket(33);
-                action.AddResources(resources, Game.ActivePlayer);
-                action.ReduceBankResources(resources);
-                return;
-
-            }
-            // remove end
-
             Game.Events.SetupCounter -= 1;
             if (!Game.Events.SetupCollect)
             {

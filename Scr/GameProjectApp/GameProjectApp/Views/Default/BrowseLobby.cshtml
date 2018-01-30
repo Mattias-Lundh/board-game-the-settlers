@@ -1,4 +1,4 @@
-﻿
+﻿@model System.Collections.Generic.List<GameProjectApp.Models.GameLobby>
 @{
     ViewBag.Title = "BrowseLobby";
 }
@@ -8,24 +8,43 @@
 
 
 <div id='2'></div>
-
-<!-- java script -->
+@ViewBag.JoinLobby
 
 <form action='BrowseLobby' method='post'>
     <p>Game Name</p>
-    <input type='text' name='createLobby' /><br/>
+    <input type='text' name='createLobby' /><br />
     <p>How many players?</p>
-    <input type='radio' name='players' value='1'/>Debug with 1 player
+    <input type='radio' name='players' value='1' />Debug with 1 player
     <input type='radio' name='players' value='3' checked='checked' />3
     <input type='radio' name='players' value='4' />4
     <input type='radio' name='players' value='5' />5<br />
-    Board setting<br/>
+    Board setting<br />
     <input type='radio' name='template' value='tutorial' checked='checked' />tutorial
     <input type='radio' name='template' value='center' />center
     <input type='radio' name='template' value='random' />random<br />
     <input type='submit' value='Create Game' />
 </form>
 
-<form action='BrowseLobby' method='post'>    
-    <input type='submit' value='joinGame' />
+<form action='BrowseLobby' method='post' id="formJoin">
+    <select id="joinList" name="joinLobby">
+        <option value="unselected">Select a game to join</option>
+    </select>
+    <input type='submit' value='Join Game' />
 </form>
+<button onclick="CheckId()" >ID Check</button>
+<script>
+    window.onload = function () {
+        @foreach(GameProjectApp.Models.GameLobby game in Model){
+            if (!game.Started && game.Participants.Count < game.RequiredPlayers) {
+                @: var element = document.createElement("option");
+                @: element.value = "@game.Id";
+                @: element.appendChild(document.createTextNode("@game.Name | " + "host: " + "@game.Participants[0].Name"));
+                @: document.getElementById("joinList").appendChild(element);
+            }
+        }
+    }
+
+    function CheckId() {
+        alert("@(ViewBag.Id)")
+    }
+</script>

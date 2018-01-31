@@ -7,7 +7,7 @@
 <h1>@Model.Name</h1>
 <br />
 <br />
-Host <br> 
+Host <br>
 * @(Model.Participants[0].Name)
 <br />
 Players<br />
@@ -23,7 +23,12 @@ else
 {
     @:Waiting for @(Model.RequiredPlayers - Model.Participants.Count) more Player(s)...
 }
-<button onclick="StartGame()">START</button>
+
+@if (ViewBag.Id == Model.Participants[0].Id)
+{
+    <button onclick="StartGame()">START</button>
+}
+
 
 <form action="GameLobby" method="post" id="start">
     <input type="hidden" name="formType" value="newGame" />
@@ -46,10 +51,12 @@ else
         document.getElementById("Refresh").submit();
         window.setTimeout(formSubmit, 1000);
     }
-
+                                                              //                                                  HERE
     window.onload = function () {
-        if(@Model.Participants.Count < @Model.RequiredPlayers){
-            window.setTimeout(formSubmit, 1000);
+        if (@Model.Participants.Count < @Model.RequiredPlayers){
+            if (!(@Model.Participants.Count == @Model.RequiredPlayers && @ViewBag.Id == @Model.Participants[0].Id)){
+                window.setTimeout(formSubmit, 1000);
+            }
         }
     };
 </script>

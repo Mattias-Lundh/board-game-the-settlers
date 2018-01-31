@@ -215,7 +215,7 @@ namespace GameProjectApp.Controllers
                 Session["player"] = "registered";
                 User user = new User(Session.SessionID, collection["userName"]);
                 Users.Add(user);
-            }            
+            }
 
             //create game
             if (collection["createLobby"] != null)

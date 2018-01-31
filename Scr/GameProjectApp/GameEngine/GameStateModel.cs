@@ -14,6 +14,8 @@ namespace GameEngine
         public List<Player> Players { get; set; }
         public Player ActivePlayer { get; set; }
         public Event Events { get; set; }
+        //remove later
+        public string Debug { get; set; }
 
         public GameStateModel(GameInstruction instruction)
         {

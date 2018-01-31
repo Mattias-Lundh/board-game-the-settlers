@@ -91,15 +91,21 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\doodad\Brick.png" />
     <Content Include="Content\Images\doodad\City.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Images\doodad\Grain.png" />
+    <Content Include="Content\Images\doodad\king.png" />
+    <Content Include="Content\Images\doodad\Ore.png" />
     <Content Include="Content\Images\doodad\Settlement.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Images\doodad\Thief.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Images\doodad\Wood.png" />
+    <Content Include="Content\Images\doodad\Wool.png" />
     <Content Include="Content\Images\Hex\Desert.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

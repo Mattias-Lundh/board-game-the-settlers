@@ -172,7 +172,7 @@ namespace GameProjectApp.Controllers
         public ActionResult GameLobby(FormCollection collection)
         {
             string id = Session.SessionID;
-            ViewBag.Id = Session.SessionID;
+            ViewBag.Id = id;
             GameLobby thisLobby = FindGameLobby(FindUser(id).InGameId.ToString());
             // start game button pressed
             if (collection["formType"] == "newGame")

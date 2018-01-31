@@ -8,8 +8,15 @@
 <br />
 <br />
 Host <br>
-* @(Model.Participants[0].Name)
+*ID: @(Model.Participants[0].Id)
 <br />
+*ID: @(ViewBag.Id)
+<br />
+*players: @Model.Participants.Count
+<br />
+*requred: @Model.RequiredPlayers
+
+<br/>
 Players<br />
 @for (int i = 1; i < Model.Participants.Count; i++)
 {
@@ -53,8 +60,10 @@ else
     }
                                                               //                                                  HERE
     window.onload = function () {
-        if (@Model.Participants.Count < @Model.RequiredPlayers){
-            if (!(@Model.Participants.Count == @Model.RequiredPlayers && @ViewBag.Id == @Model.Participants[0].Id)){
+        if (@Model.Participants.Count < @Model.RequiredPlayers && "@ViewBag.Id" != "@Model.Participants[0].Id") {
+            window.setTimeout(formSubmit, 1000);
+        } else {
+            if (@Model.Participants.Count != @Model.RequiredPlayers){
                 window.setTimeout(formSubmit, 1000);
             }
         }

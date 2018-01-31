@@ -10,7 +10,11 @@
 
 </head>
 <body>
-    <div id="debug"></div>
+    <div id="debug">
+        Debug: @Model.Debug<br/>
+        Active player: @Model.ActivePlayer.Name    
+    
+    </div>
     <div class="board" id="b1">
 
         @for (var i = 0; i < 19; i++)
@@ -184,11 +188,10 @@
     function GenerateFormItem(name, value) {
 
         var element = document.createElement("input");
-        element.name = "name";
-        element.value = "value";
+        element.name = name;
+        element.value = value;
         element.type = "hidden";
         document.getElementById("form").appendChild(element);
-
     }
 
     //loading extras
@@ -229,8 +232,8 @@
                     if (SelectedAction == "buildSettlement" & id.includes("s") & document.getElementById(id).style.borderColor == "") {
                         document.getElementById(id).style.borderColor = "@Model.ActivePlayer.Color.Name.ToLower()";
                     }
-                    //move Thief
-                }
+                    
+                }//move Thief
                 } else if (id.includes("hexShape") & !(id.includes("hexShape" + Thief))) {
                     var num = id.substring(8);
                     Thief = num;
@@ -259,9 +262,9 @@
         ThiefElement.style.left = leftOffset + 40;
         document.getElementById("b1").appendChild(ThiefElement);
     }
-
+    
     function EndTurn() {
-        if (Setup == "true"){
+        if (Setup != "true"){
             document.getElementById("form").submit();
         }
     }

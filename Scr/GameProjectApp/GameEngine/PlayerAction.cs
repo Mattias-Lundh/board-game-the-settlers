@@ -126,6 +126,7 @@ namespace GameEngine
         public void EndSetupTurn()
         {
             Game.Events.SetupCounter -= 1;
+            Game.Debug = Game.Events.SetupCounter.ToString();
             if (!Game.Events.SetupCollect)
             {
                 if (Game.Events.SetupCounter == 0)
@@ -549,9 +550,6 @@ namespace GameEngine
             {
                 throw new Exception("your data file 'longestRoad.txt' is corrupt");
             }
-
-
-
             return result;
         }
 
@@ -572,7 +570,8 @@ namespace GameEngine
 
             for (int i = 0; i < data.Length; i++)
             {
-                int city1 = Convert.ToInt32(data[i].Substring(data[i].IndexOf('-') - 1, 2).Replace("#", ""));
+                //made a change here
+                int city1 = Convert.ToInt32(data[i].Substring(data[i].IndexOf('-') - 2, 2).Replace("#", ""));
                 int city2 = Convert.ToInt32(data[i].Substring(data[i].IndexOf('-') + 1));
 
                 List<int> neighbours = new List<int>();
@@ -586,12 +585,10 @@ namespace GameEngine
                     else if (j == rawNeighbours.Length - 1)
                     {
                         neighbours.Add(Convert.ToInt32(rawNeighbours[j].Substring(0, rawNeighbours[j].IndexOf('#') - 1)));
-
                     }
                     else
                     {
                         neighbours.Add(Convert.ToInt32(rawNeighbours[j]));
-
                     }
                 }
 

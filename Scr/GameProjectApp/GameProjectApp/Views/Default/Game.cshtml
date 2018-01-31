@@ -15,8 +15,8 @@
         Active player: @Model.ActivePlayer.Name    
     
     </div>
+    <div><img src="\Content\Images\doodad\Harbor.png" class="harbor" /></div>
     <div class="board" id="b1">
-
         @for (var i = 0; i < 19; i++)
         {
             <div class="hexagon"><img class="hexPosition" id="hexShape@(i)" src=@Model.Board.HexGridImgPath[i] onclick="ElementClick(this.id)"></div>

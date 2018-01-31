@@ -6,7 +6,12 @@ html{
 
 .board {
 	position: absolute;
-    	top:50px;
+    	top: 50px;
+}
+.harbor {
+    position: absolute;
+    top: -58px;
+    left: 310px;
 }
 .hexPosition{
 	height: 150px;

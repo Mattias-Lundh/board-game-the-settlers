@@ -96,6 +96,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Images\doodad\Grain.png" />
+    <Content Include="Content\Images\doodad\Harbor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Images\doodad\king.png" />
     <Content Include="Content\Images\doodad\Ore.png" />
     <Content Include="Content\Images\doodad\Settlement.png">

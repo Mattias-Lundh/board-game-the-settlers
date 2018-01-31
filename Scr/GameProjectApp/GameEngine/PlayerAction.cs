@@ -126,7 +126,6 @@ namespace GameEngine
         public void EndSetupTurn()
         {
             Game.Events.SetupCounter -= 1;
-            Game.Debug = Game.Events.SetupCounter.ToString();
             if (!Game.Events.SetupCollect)
             {
                 if (Game.Events.SetupCounter == 0)

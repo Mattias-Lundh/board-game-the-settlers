@@ -190,7 +190,7 @@ namespace GameProjectApp.Controllers
                 if (!GameStarted(collection["gameId"]))
                 {
                     return View(thisLobby);
-                    return new HttpStatusCodeResult(304, "Not Modified");
+                    //return new HttpStatusCodeResult(304, "Not Modified"); does not work with explorer
                 }
                 else
                 {
@@ -274,7 +274,6 @@ namespace GameProjectApp.Controllers
             tempList.AddRange(Randomize(gameLobby.Participants));
             gameLobby.Participants.Clear();
             gameLobby.Participants.AddRange(tempList);
-
             GameInstruction result = new GameInstruction
             {
                 Type = GameInstruction.InstructionType.newGame,

@@ -13,11 +13,11 @@ namespace GameEngine
         public static GameStateModel ExecuteInstruction(GameInstruction instruction)
         {
             GameStateModel model;
-
             switch (instruction.Type)
             {
                 case GameInstruction.InstructionType.newGame:
                     model = new GameStateModel(instruction);
+                    Games.Add(model);
                     model.Events.GameLog.Add("A new game has begun");
                     model.Events.GameLog.Add(model.ActivePlayer.Name + " turn to deploy 1 settlement and 1 road");
                     break;

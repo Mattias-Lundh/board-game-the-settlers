@@ -10,6 +10,7 @@ namespace GameEngine
     {
         public enum InstructionType { newGame, normal }
         public InstructionType Type {get;set;}
+        public List<GameStateModel> GamesOnServer { get; set; }
         public Guid GameId { get; set; }
         public GameStateModel Game
         {

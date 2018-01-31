@@ -33,7 +33,7 @@ namespace GameEngine
             ActivePlayer = Players[rdm.Next(0, instruction.NewGamePlayers.Count - 1)];
             Events = new Event(instruction.NewGamePlayers.Count);
             Bank = new Bank();
-
+            
         }
     }
 }

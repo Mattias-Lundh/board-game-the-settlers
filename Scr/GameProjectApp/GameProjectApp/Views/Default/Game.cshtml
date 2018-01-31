@@ -88,6 +88,14 @@
 
 
 
+    <div><img id="citySettlement" src="\Content\Images\doodad\City.png" /></div>
+    <div><img id="settlementCity" src="\Content\Images\doodad\Settlement.png" /></div>
+
+       
+   <div class="" id="settlementInfo"><b>1</b></div>
+   <div id="cityInfo"><b>0</b></div>
+
+
 
 
     <form action="radiobuttons" id="playerBank">
@@ -97,18 +105,27 @@
 
     </form>
 
-
-
+    <div id="playerName">@Model.Me(ViewBag.Id).Name</div>
 
 
 
     <table id="players">
         <tr>
-            <td><img src="\Content\Images\doodad\king.png" id="player1"> Player 1</td>
-            <td><img src="\Content\Images\doodad\king.png" id="player2"> Player 2</td>
-            <td><img src="\Content\Images\doodad\king.png" id="player3"> Player 3</td>
-            <td><img src="\Content\Images\doodad\king.png" id="player4"> Player 4</td>
-            <td><img src="\Content\Images\doodad\king.png" id="player5"> Player 5</td>
+            @for (int i = 0; i < Model.Players.Count; i++)
+            {
+
+                <td><img src="\Content\Images\doodad\king.png" id="player@(i+1)" />@Model.Players[i].Name</td>
+
+
+            }
+
+
+
+            @*<td><img src="\Content\Images\doodad\king.png" id="player1" /><@Model.Players[0].Name</td>
+                <td><img src="\Content\Images\doodad\king.png" id="player2"> Player 2</td>
+                <td><img src="\Content\Images\doodad\king.png" id="player3"> Player 3</td>
+                <td><img src="\Content\Images\doodad\king.png" id="player4"> Player 4</td>*@
+
 
         </tr>
     </table>
@@ -117,11 +134,11 @@
 
     <table id="resourceInfo">
         <tr>
-            <td><div class="resourceInfo" id="resourceInfo0"><b>1</b></div></td>
-            <td><div class="resourceInfo" id="resourceInfo1"><b>2</b></div></td>
-            <td><div class="resourceInfo" id="resourceInfo2"><b>3</b></div></td>
-            <td><div class="resourceInfo" id="resourceInfo3"><b>4</b></div></td>
-            <td><div class="resourceInfo" id="resourceInfo4"><b>5</b></div></td>
+            <td><div class="resourceInfo" id="resourceInfo0"><b>@Model.ActivePlayer.Inventory.Wool</b></div></td>
+            <td><div class="resourceInfo" id="resourceInfo1"><b>@Model.ActivePlayer.Inventory.Brick</b></div></td>
+            <td><div class="resourceInfo" id="resourceInfo2"><b>@Model.ActivePlayer.Inventory.Ore</b></div></td>
+            <td><div class="resourceInfo" id="resourceInfo3"><b>@Model.ActivePlayer.Inventory.Lumber</b></div></td>
+            <td><div class="resourceInfo" id="resourceInfo4"><b>@Model.ActivePlayer.Inventory.Grain</b></div></td>
 
         </tr>
     </table>
@@ -149,7 +166,7 @@
 
     <div id="infoBox">Here info will show up</div>
 
-    <button onclick="EndTurn()">END TURN</button>
+    
 </body>
 
 

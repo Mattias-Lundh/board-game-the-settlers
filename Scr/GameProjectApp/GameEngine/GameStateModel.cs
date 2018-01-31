@@ -14,8 +14,19 @@ namespace GameEngine
         public List<Player> Players { get; set; }
         public Player ActivePlayer { get; set; }
         public Event Events { get; set; }
-        //remove later
-        public string Debug { get; set; }
+        public Player Me(string id)
+        {
+
+            foreach(Player player in Players)
+            {
+                if(player.Id == id)
+                {
+                    return player;
+                }
+             
+            }
+            throw new Exception("Player is not in game");
+        }
 
         public GameStateModel(GameInstruction instruction)
         {
@@ -35,7 +46,7 @@ namespace GameEngine
             ActivePlayer = Players[rdm.Next(0, instruction.NewGamePlayers.Count - 1)];
             Events = new Event(instruction.NewGamePlayers.Count);
             Bank = new Bank();
-            
+
         }
     }
 }

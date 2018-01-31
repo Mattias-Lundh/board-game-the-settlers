@@ -111,6 +111,7 @@ html {
     position: absolute;
     bottom: 300px;
     left: 0px;
+    width: 250px;
 }
 
 #Wool {
@@ -134,10 +135,12 @@ html {
 }
 
 #Eventlog {
+
     font-family: “Roboto”, sans-serif;
     position: absolute;
     top: 100px;
-    right: 2px;
+    right: 0px;
+    width: 345px
  
    
 }
@@ -153,8 +156,10 @@ html {
 .btn-group button {
     background-color: grey;
     border: 2px solid black;
+    height: 50px;
+    width: 70px;
     color: white; /* White text */
-    padding: 10px 24px; /* Some padding */
+    padding: 5px 15px; /* Some padding */
     cursor: pointer /* Pointer/hand icon */
     float: left; /* Float the buttons side by side */
 }
@@ -258,7 +263,7 @@ td {
 #want {
     position: absolute;
     background-color: lightgrey;
-    width: 342px;
+    width: 300px;
     border: 3px solid black;
     text-align: center;
     height: 20px;
@@ -269,7 +274,7 @@ td {
 #give {
     position: absolute;
     background-color: lightgrey;
-    width: 342px;
+    width: 300px;
     border: 3px solid black;
     text-align: center;
     height: 20px;
@@ -301,14 +306,14 @@ td {
 #plusMinus3 {
     position: absolute;
     bottom: 213px;
-    left: 235px;
+    left: 220px;
     text-align: center;
 }
 
 #plusMinus4 {
     position: absolute;
     bottom: 213px;
-    left: 300px;
+    left: 280px;
     text-align: center;
 }
 
@@ -337,14 +342,14 @@ td {
 #plusMinus33 {
     position: absolute;
     bottom: 122px;
-    left: 235px;
+    left: 220px;
     text-align: center;
 }
 
 #plusMinus44 {
     position: absolute;
     bottom: 122px;
-    left: 300px;
+    left: 280px;
     text-align: center;
 }
 
@@ -361,7 +366,7 @@ td {
     margin: 4px 2px;
     cursor: pointer;
     bottom: 12px;
-    left: 190px;
+    left: 170px;
     height: 100px;
     width: 120px;
 }
@@ -381,11 +386,9 @@ td {
     background-color: lightgrey;
     width: 300px;
     border: 5px solid black;
-    padding: 25px;
-    height: 15px;
-    width: 289px;
+    height: 170px;
     top: 150px;
-    left: 2px;
+    left: 0px;
 }
 
 #citySettlement {

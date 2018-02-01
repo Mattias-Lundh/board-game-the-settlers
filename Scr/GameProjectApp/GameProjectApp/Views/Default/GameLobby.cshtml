@@ -6,17 +6,7 @@
 <h2>GameLobby</h2>
 <h1>@Model.Name</h1>
 <br />
-<br />
-Host <br>
-*ID: @(Model.Participants[0].Id)
-<br />
-*ID: @(ViewBag.Id)
-<br />
-*players: @Model.Participants.Count
-<br />
-*requred: @Model.RequiredPlayers
 
-<br/>
 Players<br />
 @for (int i = 1; i < Model.Participants.Count; i++)
 {
@@ -60,11 +50,13 @@ else
     }
                                                               //                                                  HERE
     window.onload = function () {
-        if (@Model.Participants.Count < @Model.RequiredPlayers && "@ViewBag.Id" != "@Model.Participants[0].Id") {
+        if ("@ViewBag.Id" != "@Model.Participants[0].Id") {
             window.setTimeout(formSubmit, 1000);
         } else {
             if (@Model.Participants.Count != @Model.RequiredPlayers){
                 window.setTimeout(formSubmit, 1000);
+            } else {
+                window.clearTimeout();
             }
         }
     };

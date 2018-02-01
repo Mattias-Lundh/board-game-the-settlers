@@ -442,6 +442,12 @@ td {
     
 }
 
+#debug {
+
+    border: 2px black;
+
+}
+
 .structureDot {
     position: absolute;
     width: 17px;

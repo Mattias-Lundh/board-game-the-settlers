@@ -7,15 +7,25 @@
     background-color: grey;
     border: 2px solid black;
     color: white; /* White text */
+    border-radius: 4px;
     padding: 10px 24px; /* Some padding */
     cursor: pointer; /* Pointer/hand icon */
     float: left; /* Float the buttons side by side */
 }
 
+    .btn-group:hover {
+        background-color: dimgrey;
+    }
+
 .singlebutton {
     background-color: grey;
     border: 2px solid black;
+    border-radius: 4px;
     color: white; /* White text */
-    padding: 1px 10px; /* Some padding */
+    padding: 4px 10px; /* Some padding */
     cursor: pointer; /* Pointer/hand icon */
 }
+
+    .singlebutton:hover {
+        background-color: dimgrey;
+    }

@@ -24,7 +24,7 @@
 }
     @if (ViewBag.Id == Model.Participants[0].Id)
     {
-        <button onclick="StartGame()">START</button>
+        <button onclick="StartGame()" class="singlebutton">START</button>
     }
 
     <form action="GameLobby" method="post" id="start">

@@ -127,7 +127,7 @@
     <Content Include="Content\Images\Hex\Pasture.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Images\Login.css" />
+    <Content Include="Content\Login.css" />
     <Content Include="Content\settlerStyle.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Start.css" />

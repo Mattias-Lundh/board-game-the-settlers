@@ -2,20 +2,21 @@
 @{
     ViewBag.Title = "Login";
 }
-
 <head>
-    <link rel="stylesheet" type="text/css" href="/Content/Login.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Standard.css">
 </head>
-<div class="login-page">
-    <p><big> Welcome to settlers of Catan </big> </p><br>
-    @ViewBag.Message<br>
-    <div class="form">
-        <form action="BrowseLobby" class="login-form" method="post" id="loginForm">
-            <input type="text" placeholder="Name" name="userName"/>
-            <button onclick="SubmitForm()">login</button>
-        </form>
+<body>
+    <div class="login-page">
+        <p><big> Welcome to settlers of Catan </big> </p><br>
+        @ViewBag.Message<br>
+        <div class="form">
+            <form action="BrowseLobby" class="login-form" method="post" id="loginForm">
+                <input type="text" placeholder="Name" name="userName" />
+                <button onclick="SubmitForm()">login</button>
+            </form>
+        </div>
     </div>
-</div>
+</body>
 <script type="text/javascript">
     function SubmitForm() {
         document.getElementById("loginForm").SubmitForm();

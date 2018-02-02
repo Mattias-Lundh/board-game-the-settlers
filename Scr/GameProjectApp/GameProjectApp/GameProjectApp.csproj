@@ -127,10 +127,9 @@
     <Content Include="Content\Images\Hex\Pasture.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Login.css" />
     <Content Include="Content\settlerStyle.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="Content\Start.css" />
+    <Content Include="Content\Standard.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />

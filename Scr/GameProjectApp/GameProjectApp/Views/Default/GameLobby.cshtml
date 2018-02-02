@@ -2,36 +2,36 @@
 @{
     ViewBag.Title = "GameLobby";
 }
-
-<h2>GameLobby</h2>
-<h1>@Model.Name</h1>
-<br />
-
-Players<br />
-@for (int i = 1; i < Model.Participants.Count; i++)
-{
-    @:* @(Model.Participants[i].Name)<br />
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/Standard.css">
+</head>
+<body>
+    <h2>GameLobby</h2>
+    <h1>@Model.Name</h1>
+    <br />
+    Players<br />
+    @for (int i = 1; i < Model.Participants.Count; i++)
+    {
+        @:* @(Model.Participants[i].Name)<br />
 }
-@if (Model.Participants.Count == Model.RequiredPlayers)
-{
-    @:Ready To Start. gl,hf
+    @if (Model.Participants.Count == Model.RequiredPlayers)
+    {
+        @:Ready To Start. gl,hf
 }
-else
-{
-    @:Waiting for @(Model.RequiredPlayers - Model.Participants.Count) more Player(s)...
+    else
+    {
+        @:Waiting for @(Model.RequiredPlayers - Model.Participants.Count) more Player(s)...
 }
+    @if (ViewBag.Id == Model.Participants[0].Id)
+    {
+        <button onclick="StartGame()">START</button>
+    }
 
-@if (ViewBag.Id == Model.Participants[0].Id)
-{
-    <button onclick="StartGame()">START</button>
-}
+    <form action="GameLobby" method="post" id="start">
+        <input type="hidden" name="formType" value="newGame" />
+    </form>
 
-
-<form action="GameLobby" method="post" id="start">
-    <input type="hidden" name="formType" value="newGame" />
-
-</form>
-
+</body>
 <script type="text/javascript">
     function StartGame() {
         if (@Model.RequiredPlayers == @Model.Participants.Count){
@@ -61,9 +61,7 @@ else
         }
     };
 </script>
-
 <form action="GameLobby" method="post" id="Refresh">
     <input type="hidden" name="poke" value="refresh">
     <input type="hidden" name="gameId" value="@Model.Id" />
 </form>
-

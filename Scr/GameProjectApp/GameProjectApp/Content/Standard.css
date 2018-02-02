@@ -1,3 +1,21 @@
 ﻿body {
     background-color: lightgrey;
+    text-align: left;
+}
+
+.btn-group {
+    background-color: grey;
+    border: 2px solid black;
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+}
+
+.singlebutton {
+    background-color: grey;
+    border: 2px solid black;
+    color: white; /* White text */
+    padding: 1px 10px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
 }

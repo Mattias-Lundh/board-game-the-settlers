@@ -22,15 +22,15 @@
         <input type='radio' name='template' value='tutorial' checked='checked' />tutorial
         <input type='radio' name='template' value='center' />center
         <input type='radio' name='template' value='random' />random<br />
-        <input type='submit' value='Create Game' />
+        <input type='submit' value='Create Game' class="singlebutton" />
     </form>
     <form action='BrowseLobby' method='post' id="formJoin">
         <select id="joinList" name="joinLobby">
             <option value="unselected">Select a game to join</option>
         </select>
-        <input type='submit' value='Join Game' />
+        <input type='submit' value='Join Game' class="singlebutton" />
     </form>
-    <button onclick="CheckId()">ID Check</button>
+    <button onclick="CheckId()" class="singlebutton">ID Check</button>
 </body>
 <script>
     window.onload = function () {
